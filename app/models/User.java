@@ -25,6 +25,8 @@ public class User {
 	private String pass;
 	@Column
 	private String nome;
+	@Column
+	private String login;
 	
 	public User() {
 	}
@@ -57,6 +59,14 @@ public class User {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getLogin() {
+		return login;
+	}
+	
+	public void setLogin(String login) {
+		this.login = login;
 	}
 	
 	@Override

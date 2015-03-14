@@ -37,11 +37,11 @@ public class Login extends Controller {
 	public static Result authenticate() {		
 		User u = loginForm.bindFromRequest().get();
 		
-		List<User> usuarioNoBD = dao.findByAttributeName("User", "email", u.getEmail());
+		List<User> usuarioNoBD = dao.findByAttributeName("User", "login", u.getLogin());
         String pass = loginForm.bindFromRequest().data().get("pass");
 		
         if (loginForm.hasErrors() || !validate(usuarioNoBD, pass)) {
-        	flash("fail", "Email ou Senha Inválidos");
+        	flash("fail", "Login ou Senha Inválidos");
         	return unauthorized(login.render(loginForm));
         } else {
         	User user = usuarioNoBD.get(0);
@@ -57,9 +57,7 @@ public class Login extends Controller {
 	private static boolean validate(List<User> listaUsuario, String pass) {
 		try {
 			User usuarioLogado = listaUsuario.get(0);
-			if (listaUsuario.size()>1){
-				Logger.debug("Mais de um usuário com o mesmo e-mail");
-			}
+			
 			if (usuarioLogado.checkPass(pass)) {
 				return true;
 			} else {

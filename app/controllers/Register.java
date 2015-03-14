@@ -9,7 +9,6 @@ import models.dao.GenericDAO;
 import models.dao.GenericDAOImpl;
 import play.Logger;
 import play.data.Form;
-import play.data.validation.Constraints.EmailValidator;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -36,8 +35,8 @@ public class Register extends Controller {
         } else if(checkDBForUser(u.getEmail())) {
         	flash("fail", "E-mail em uso");
         	return badRequest(register.render(registerForm));
-        } else if(checkDBForName(u.getNome())) {
-        	flash("fail", "Nome em uso");
+        } else if(checkDBForName(u.getLogin())) {
+        	flash("fail", "Login em uso");
         	return badRequest(register.render(registerForm));
         }
 		else {
@@ -48,8 +47,8 @@ public class Register extends Controller {
         }
     }
 
-	private static boolean checkDBForName(String nome) {
-		List<User> userInDB = dao.findByAttributeName("User", "nome", nome);
+	private static boolean checkDBForName(String login) {
+		List<User> userInDB = dao.findByAttributeName("User", "login", login);
 		
 		if (userInDB == null || userInDB.size() == 0) {
 			return false;
