@@ -16,7 +16,7 @@ public class RegistroTest extends AbstractTest{
 	
 	@Test
 	public void callLogin() {
-		result = callAction(controllers.routes.ref.Registro.show(),
+		result = callAction(controllers.routes.ref.Register.show(),
 				fakeRequest());
 		assertThat(status(result)).isEqualTo(Http.Status.OK);
 		
