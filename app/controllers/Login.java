@@ -8,6 +8,7 @@ import models.User;
 import models.dao.GenericDAO;
 import models.dao.GenericDAOImpl;
 import play.Logger;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -24,7 +25,7 @@ public class Login extends Controller {
 		if (session().get("user") != null) {
 			return redirect(routes.Application.index());
 		}
-        return ok(login.render(loginForm));
+        return ok(login.render());
     }
 	
 	@Transactional
@@ -35,14 +36,14 @@ public class Login extends Controller {
     
 	@Transactional
 	public static Result authenticate() {		
-		User u = loginForm.bindFromRequest().get();
-		
-		List<User> usuarioNoBD = dao.findByAttributeName("User", "login", u.getLogin());
-        String pass = loginForm.bindFromRequest().data().get("pass");
+		DynamicForm requestData = Form.form().bindFromRequest();
+		String nick = requestData.get("login");
+		String pass = requestData.get("pass");
+		List<User> usuarioNoBD = dao.findByAttributeName("User", "login", nick);
 		
         if (loginForm.hasErrors() || !validate(usuarioNoBD, pass)) {
         	flash("fail", "Login ou Senha Inválidos");
-        	return unauthorized(login.render(loginForm));
+        	return unauthorized(login.render());
         } else {
         	User user = usuarioNoBD.get(0);
             session().clear();

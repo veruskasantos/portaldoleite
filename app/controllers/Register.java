@@ -8,39 +8,40 @@ import models.User;
 import models.dao.GenericDAO;
 import models.dao.GenericDAOImpl;
 import play.Logger;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.register;
+import views.html.login;
 
 public class Register extends Controller {
 	
 	private static GenericDAO dao = new GenericDAOImpl();
-	static Form<User> registerForm = form(User.class).bindFromRequest();
 
 	@Transactional
     public static Result show() {
-        return ok(register.render(registerForm));
+        return ok(login.render());
     }
     
 	@Transactional
 	public static Result register() {
-		
-		User u = registerForm.bindFromRequest().get();    	
-		
-		if (registerForm.hasErrors()) {
-			flash("fail", "Campos inválidos");
-            return badRequest(register.render(registerForm));
-        } else if(checkDBForUser(u.getEmail())) {
+		DynamicForm requestData = Form.form().bindFromRequest();
+		String nome = requestData.get("nome");
+		String email = requestData.get("email");
+		String nick = requestData.get("login");
+		String pass = requestData.get("pass");
+		if(checkDBForUser(email)) {
         	flash("fail", "E-mail em uso");
-        	return badRequest(register.render(registerForm));
-        } else if(checkDBForName(u.getLogin())) {
+        	return badRequest(login.render());
+        } else if(checkDBForName(nick)) {
         	flash("fail", "Login em uso");
-        	return badRequest(register.render(registerForm));
+        	return badRequest(login.render());
         }
 		else {
-        	dao.persist(u);
+			User usuario = new User(email, pass, nome);
+			usuario.setLogin(nick);
+        	dao.persist(usuario);
             return redirect(
                 routes.Login.show()
             );
