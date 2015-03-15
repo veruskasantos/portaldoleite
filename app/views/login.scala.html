@@ -1,26 +1,41 @@
 @(form: Form[User])
 
 @main("Login Page") {
-   <div class="col-sm-4 col-sm-offset-4">
+   <div>
    @if(flash.contains("fail")) {
    		<p class="bg-danger" style="">
         	@flash.get("fail")
 		</p>
    }
    
-   @helper.form(routes.Login.authenticate) {
-	   <h1 class="text-center">LogIn</h1>
-       <p>
-	       <input type="text" name="login" placeholder="Login" value='@form("login").value'
-                  class="form-control">
-       </p>
-       <p>
-	       <input type="password" name="pass" placeholder="Password" class="form-control">
-       </p>
-       <div>
-	       <button class="btn btn-primary" type="submit">Login</button>
-	       <a class="btn btn-info" style="float:right;" href="/registrar"> Registrar</a>
-       </div>
+	@helper.form(routes.Login.authenticate) {
+	<div class="uk-container center">
+		<img alt="Portal Do Leite" src="@routes.Assets.at("images/logo.png")">
+		<div class="uk-panel-box"> 
+			<div class="uk-form">
+				<div class="uk-panel-title">Bem-vindo ao Portal Do Leite</div>
+				<div class="uk-form-row">
+					<div class="uk-form-icon">
+						<i class="uk-icon-user"></i>
+						<input type="text" name="login" placeholder="Usuário" value='@form("login").value'
+							class="form-control">
+					</div>
+				</div>
+				<div class="uk-form-row">
+					<div class="uk-form-icon">
+						<i class="uk-icon-key"></i>
+						<input type="password" name="pass" placeholder="Senha">
+					</div>
+				</div>
+				<div class="uk-form-row">
+					<button class="uk-button" type="submit">Login</button>
+				</div>
+			</div>
+		</div>
+		<div>
+			<br><p>Ainda não possui um cadastro? <a class="btn btn-info" href="/registrar">Cadastre-se</a> agora.</p>
+		</div>
+	</div>
 	}
-    </div>
+	</div>
 }
