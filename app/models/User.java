@@ -18,6 +18,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+
 	@Column
 	@Email
 	private String email;
@@ -86,4 +87,8 @@ public class User {
 		User other = (User) obj;
 		return other.hashCode()==this.hashCode();
 	}	
+
+	public Long getId() {
+		return id;
+	}
 }
