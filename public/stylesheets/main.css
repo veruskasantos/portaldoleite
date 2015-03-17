@@ -12,8 +12,9 @@
 	font-weight: normal;
 }
 
-.float-left {
-	float: left;
+.align-right{
+    position: relative;
+    right: 0px;
 }
 
 .row{
