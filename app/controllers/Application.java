@@ -4,10 +4,15 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
+import views.html.tema;
 
 public class Application extends Controller {
 	@Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(index.render("Home Page"));
     }
+	
+	public static Result tema() {
+		return ok(tema.render());
+	}
 }

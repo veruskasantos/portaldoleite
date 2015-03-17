@@ -104,7 +104,7 @@ pre,
 address,
 fieldset,
 figure {
-  margin: 0 0 15px 0;
+  margin: 0 0 10px 0;
 }
 * + p,
 * + ul,
@@ -187,7 +187,7 @@ hr {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
-  margin: 15px 0;
+  margin: 10px 0;
   border: 0;
   border-top: 1px solid #ff9602;
 }
@@ -898,8 +898,19 @@ iframe {
   padding: 15px;
   background: #424242;
   color: #ffffff;
-  border: 1px solid #ff9602;
-  border-radius: 4px;
+  /*border: 1px solid #ff9602;*/
+  border: none;
+  border-radius: 5px;
+}
+
+.uk-panel-box .dica {
+  padding: 7px;
+  background: #3f3f3f;
+  color: #ffffff;
+  /*border: 1px solid #ff9602;*/
+  border: none;
+  border-radius: 10px;
+  box-shadow: -2px 2px 1px #474747;
 }
 .uk-panel-box-hover:hover {
   color: #ffffff;
@@ -1034,8 +1045,17 @@ iframe {
   font-weight: normal;
 }
 .uk-article-divider {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+  border-color: #1bafd6;
+  border-style: dashed;
+}
+.uk-article-divider-orange {
+  margin-bottom: 15px;
   border-color: #ff9602;
+}
+.uk-article-divider-green {
+  margin-bottom: 15px;
+  border-color: #a8ff00;
 }
 * + .uk-article-divider {
   margin-top: 25px;

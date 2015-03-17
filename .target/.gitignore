@@ -1,5 +1,15 @@
+<<<<<<< Updated upstream
 /views
 /LoginTest.class
 /RegistroTest.class
 /models/
+=======
+/LoginTest.class
+/RegistroTest.class
+/UsuarioTest.class
+/base
+>>>>>>> Stashed changes
 /controllers
+/models
+/org
+/views
