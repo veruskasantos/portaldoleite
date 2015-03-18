@@ -13,8 +13,7 @@
 }
 
 .align-right{
-    position: relative;
-    right: 0px;
+	float: right;
 }
 
 .row{

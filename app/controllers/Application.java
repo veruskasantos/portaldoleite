@@ -26,9 +26,8 @@ public class Application extends Controller {
     }
 	
 	@Transactional
-	public static Result tema() {
-		//passar tema aqui para ser repassado para view
-		return ok(views.html.tema.render());
+	public static Result tema(long id) {
+		return ok(views.html.tema.render(dao.findAllByClassName("Disciplina"), dao.findByEntityId(Tema.class, id)));
 	}
 	
 	@Transactional

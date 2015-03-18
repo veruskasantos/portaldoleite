@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,8 @@ public class Tema {
 	
 	public Tema(String name) {
 		this.name = name;
+		this.dicas = new ArrayList<Dica>();
+		this.usersDifficulty = new HashMap<String, String>();
 	}
 	
 	public void incrementarDificuldade(String userLogin, int dificuldade) {

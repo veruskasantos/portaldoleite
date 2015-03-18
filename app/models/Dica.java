@@ -1,5 +1,6 @@
 package models;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -46,6 +47,7 @@ public abstract class Dica implements Comparable<Dica>{
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
+		this.usersCommentaries = new HashMap<String,String>();
 	}
 
 	public long getId() {
