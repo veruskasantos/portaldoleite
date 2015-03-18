@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +10,9 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.MapKey;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 
@@ -85,5 +83,45 @@ public class Tema {
 	
 	public void addDica(Dica dica) {
 		this.dicas.add(dica);
+	}
+	
+	public Map<String, String> getUsersDifficulty() {
+		return usersDifficulty;
+	}
+
+	public double getMediana() {
+		List<String> difficultyVotes = new ArrayList<String>(this.usersDifficulty.values());
+		
+		Collections.sort(difficultyVotes);
+		int totalVotes = difficultyVotes.size();
+				
+		if (totalVotes == 0) {
+			return 0;
+		}
+		else if (totalVotes % 2 == 1) {
+			String mediana = difficultyVotes.get(totalVotes/2);
+			
+			return Integer.parseInt(mediana);
+		}
+		else {
+			String primeiraMediana = difficultyVotes.get(totalVotes/2);
+			String segundaMediana = difficultyVotes.get((totalVotes/2)+1);
+			
+			return (Integer.parseInt(primeiraMediana) + Integer.parseInt(segundaMediana))/2.0;
+		}
+	}
+	
+	public double getMedia() {
+		List<String> difficultyVotes = new ArrayList<String>(this.usersDifficulty.values());
+		
+		int totalVotes = difficultyVotes.size();
+		
+		double votesCount = 0;
+		
+		for (String vote : difficultyVotes) {
+			votesCount = votesCount + Double.parseDouble(vote);
+		}
+		
+		return votesCount/totalVotes;
 	}
 }

@@ -1,15 +1,14 @@
 package controllers;
 
-import java.util.List;
 import java.util.Map;
 
-import models.Dica;
 import models.DicaAssunto;
 import models.DicaConselho;
 import models.DicaDisciplina;
 import models.DicaMaterial;
 import models.Tema;
 import models.dao.GenericDAOImpl;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -19,8 +18,6 @@ import views.html.index;
 
 public class Application extends Controller {
 	private static GenericDAOImpl dao = new GenericDAOImpl();
-	
-	private static Form<Dica> dicaForm = Form.form(Dica.class);
 	
 	@Transactional
 	@Security.Authenticated(Secured.class)
@@ -36,13 +33,14 @@ public class Application extends Controller {
 	
 	@Transactional
 	public static Result cadastrarDica() {
-		Form<Dica> filledForm = dicaForm.bindFromRequest();
+		
+		DynamicForm filledForm = Form.form().bindFromRequest();
 		
 		Map<String,String> formMap = filledForm.data();
 		
-		String nomeTema = formMap.get("tema");
+		long idTema = Long.parseLong(formMap.get("idTema"));
 		
-		Tema tema = (Tema) dao.findByAttributeName("Tema", "name", nomeTema).get(0);
+		Tema tema = dao.findByEntityId(Tema.class, idTema);
 		
 		if (filledForm.hasErrors()) {
 			return badRequest(views.html.index.render("Home Page")); //mudar
@@ -91,6 +89,28 @@ public class Application extends Controller {
 			
 			dao.flush();			
 			
+			return redirect(routes.Application.index());
+		}
+	}
+	
+	@Transactional
+	public static Result votarDificuldadeTema() {
+		DynamicForm filledForm = Form.form().bindFromRequest();
+		
+		if (filledForm.hasErrors()) {
+			return badRequest(views.html.index.render("Home Page")); //mudar
+		} else {
+			Map<String, String> formMap = filledForm.data();
+			long idTema = Long.parseLong(formMap.get("idTema"));
+			int dificuldade = Integer.parseInt(formMap.get("dificuldade"));	
+			String userLogin = formMap.get("userLogin");
+			Tema tema = dao.findByEntityId(Tema.class, idTema);
+			
+			//Tema tema = dao.findByEntityId(Tema.class, id)(Tema) dao.findByAttributeName("Tema", "name", nomeTema).get(0);
+			
+			tema.incrementarDificuldade(userLogin, dificuldade);
+			dao.merge(tema);
+			dao.flush();
 			return redirect(routes.Application.index());
 		}
 	}

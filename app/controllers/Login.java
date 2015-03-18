@@ -47,7 +47,8 @@ public class Login extends Controller {
         } else {
         	User user = usuarioNoBD.get(0);
             session().clear();
-            session("user", user.getNome());
+            session("username", user.getNome());
+            session("login", user.getLogin());
             
             return redirect(
                 routes.Application.index()

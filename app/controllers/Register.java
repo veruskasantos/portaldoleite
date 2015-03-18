@@ -27,10 +27,12 @@ public class Register extends Controller {
 	@Transactional
 	public static Result register() {
 		DynamicForm requestData = Form.form().bindFromRequest();
+		
 		String nome = requestData.get("nome");
 		String email = requestData.get("email");
 		String nick = requestData.get("login");
 		String pass = requestData.get("pass");
+		
 		if(checkDBForUser(email)) {
         	flash("fail", "E-mail em uso");
         	return badRequest(login.render());
@@ -39,8 +41,9 @@ public class Register extends Controller {
         	return badRequest(login.render());
         }
 		else {
-			User usuario = new User(email, pass, nome);
-			usuario.setLogin(nick);
+			User usuario = new User(email, pass, nick);
+			usuario.setNome(nome);
+			
         	dao.persist(usuario);
             return redirect(
                 routes.Login.show()
