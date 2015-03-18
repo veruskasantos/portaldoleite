@@ -31,4 +31,9 @@ public class DicaDisciplina extends Dica{
 	public void setRazao(String razao) {
 		this.razao = razao;
 	}
+
+	@Override
+	public String getTexto() {
+		return "<p> Disciplinas importantes: " + this.nomeDisciplina + "</p><p> Razão: " + this.razao + "</p>";
+	}
 }

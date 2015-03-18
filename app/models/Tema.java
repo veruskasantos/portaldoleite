@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +79,7 @@ public class Tema {
 	}
 
 	public List<Dica> getDicas() {
+		Collections.sort(dicas);
 		return dicas;
 	}
 	
