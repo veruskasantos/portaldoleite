@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 
@@ -26,8 +27,10 @@ public class Tema {
 	@Column
 	private String name;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Disciplina disciplina;
+	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="DICAS")
 	private List<Dica> dicas;
 	
 	@ElementCollection

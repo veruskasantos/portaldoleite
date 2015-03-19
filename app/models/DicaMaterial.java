@@ -8,6 +8,9 @@ public class DicaMaterial extends Dica{
 	@Column
 	private String url;
 	
+	public DicaMaterial() {
+	}
+	
 	public DicaMaterial(String url) {
 		this.url = url;
 	}
@@ -22,6 +25,6 @@ public class DicaMaterial extends Dica{
 
 	@Override
 	public String getTexto() {
-		return getUrl();
+		return "Link para material útil: " + getUrl();
 	}
 }

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -24,11 +25,17 @@ public abstract class Dica implements Comparable<Dica>{
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Tema tema;
 	
+	@Column
+	private String user;
+	
 	@ElementCollection
     @MapKeyColumn(name="user")
     @Column(name="commentary")
     @CollectionTable(name="USERS_COMM", joinColumns=@JoinColumn(name="dica_id"))
 	private Map<String, String> usersCommentaries;
+	
+	@ElementCollection
+	private List<String> usuariosQueJaVotaram;
 	
 	@Column
 	private int concordancias;
@@ -81,6 +88,10 @@ public abstract class Dica implements Comparable<Dica>{
 	}
 	
 	public float getIndiceConcordancia() {
+		int soma = concordancias + discordancias;
+		if(soma == 0){
+			return 0;
+		}
 		return this.getConcordancias()/(this.getConcordancias()+this.getDiscordancias());
 	}
 	
@@ -90,6 +101,22 @@ public abstract class Dica implements Comparable<Dica>{
 
 	public void setFlag(int flag) {
 		this.flag = flag;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+	
+	public void addUsuarioQueVotou(String user){
+		usuariosQueJaVotaram.add(user);
+	}
+	
+	public boolean wasVotedByUser(String user){
+		return usuariosQueJaVotaram.contains(user); 
 	}
 
 	@Override

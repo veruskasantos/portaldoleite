@@ -8,6 +8,9 @@ public class DicaAssunto extends Dica{
 	@Column
 	private String assunto;
 	
+	public DicaAssunto(){
+	}
+	
 	public DicaAssunto(String assunto) {
 		this.assunto = assunto;
 	}
@@ -22,6 +25,6 @@ public class DicaAssunto extends Dica{
 
 	@Override
 	public String getTexto() {
-		return getAssunto();
+		return "Assunto importante: " + getAssunto();
 	}
 }

@@ -3,7 +3,7 @@ import java.util.List;
 
 import models.Disciplina;
 import models.Tema;
-import models.dao.GenericDAO;
+import models.dao.GenericDAOImpl;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -12,7 +12,7 @@ import play.db.jpa.JPA;
 
 public class Global extends GlobalSettings {
 
-	private static GenericDAO dao;
+	private static GenericDAOImpl dao = new GenericDAOImpl();
 	List<Disciplina> disciplinas = new ArrayList<>();
 	
 	@Override

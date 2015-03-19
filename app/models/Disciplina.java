@@ -3,11 +3,14 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity(name="Disciplina")
 public class Disciplina {
@@ -17,7 +20,7 @@ public class Disciplina {
 	
 	private String nome;
 	
-	@ElementCollection
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Tema> temas;
 	
 	public Disciplina() {

@@ -8,6 +8,9 @@ public class DicaConselho extends Dica{
 	@Column
 	private String conselho;
 	
+	public DicaConselho() {
+	}
+	
 	public DicaConselho(String conselho) {
 		this.conselho = conselho;
 	}

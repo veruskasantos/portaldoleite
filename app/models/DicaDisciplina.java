@@ -11,6 +11,9 @@ public class DicaDisciplina extends Dica{
 	@Column
 	private String razao;
 	
+	public DicaDisciplina() {
+	}
+	
 	public DicaDisciplina(String nomeDisciplina, String razao) {
 		this.nomeDisciplina = nomeDisciplina;
 		this.razao = razao;
@@ -34,6 +37,6 @@ public class DicaDisciplina extends Dica{
 
 	@Override
 	public String getTexto() {
-		return "<p> Disciplinas importantes: " + this.nomeDisciplina + "</p><p> Razão: " + this.razao + "</p>";
+		return "Disciplinas importantes: " + this.nomeDisciplina + " Razão: " + this.razao;
 	}
 }
