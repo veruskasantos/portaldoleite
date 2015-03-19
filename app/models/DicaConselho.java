@@ -32,9 +32,4 @@ public class DicaConselho extends Dica{
 	public String getTipo() {
 		return "DicaConselho";
 	}
-
-	@Override
-	public String getRazao() {
-		return null;
-	}
 }

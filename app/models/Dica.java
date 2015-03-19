@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.Transient;
 
 @Entity(name="Dica")
 //@DiscriminatorColumn(name="REF_TYPE")
@@ -45,6 +46,19 @@ public abstract class Dica implements Comparable<Dica>{
 	
 	@Column
 	private int flag;
+	
+	@Transient
+	private DicaDisciplina instanciaDisciplina;
+
+	@Transient
+	private DicaAssunto instanciaAssunto;
+	
+	@Transient
+	private DicaMaterial instanciaMaterial;
+	
+	@Transient
+	private DicaConselho instanciaConselho;
+	
 	
 	public Dica(){}
 
@@ -130,7 +144,38 @@ public abstract class Dica implements Comparable<Dica>{
 		}
 	}
 	
-	public abstract String getTipo();
+	public void checaTipoDica() {
+		switch (this.getTipo()) {
+		case "DicaAssunto":
+			this.instanciaAssunto = (DicaAssunto) this;			
+			break;
+		case "DicaMaterial":
+			this.instanciaMaterial = (DicaMaterial) this;			
+			break;
+		case "DicaDisciplina":
+			this.instanciaDisciplina = (DicaDisciplina) this;			
+			break;
+		case "DicaConselho":
+			this.instanciaConselho = (DicaConselho) this;			
+			break;
+		}
+	}
 	
-	public abstract String getRazao();
+	public DicaDisciplina getInstanciaDisciplina() {
+		return instanciaDisciplina;
+	}
+
+	public DicaAssunto getInstanciaAssunto() {
+		return instanciaAssunto;
+	}
+
+	public DicaMaterial getInstanciaMaterial() {
+		return instanciaMaterial;
+	}
+
+	public DicaConselho getInstanciaConselho() {
+		return instanciaConselho;
+	}
+
+	public abstract String getTipo();
 }

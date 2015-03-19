@@ -32,11 +32,6 @@ public class DicaAssunto extends Dica{
 	public String getTipo() {
 		return "DicaAssunto";
 	}
-
-	@Override
-	public String getRazao() {
-		return null;
-	}
 	
 	
 }

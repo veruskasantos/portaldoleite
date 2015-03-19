@@ -86,6 +86,11 @@ public class Tema {
 
 	public List<Dica> getDicas() {
 		Collections.sort(dicas);
+		
+		for (Dica dica : dicas) {
+			dica.checaTipoDica();
+		} //refatorar
+		
 		return dicas;
 	}
 	
