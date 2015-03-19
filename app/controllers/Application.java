@@ -29,6 +29,7 @@ public class Application extends Controller {
     }
 	
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result tema(long id) {
 		//TODO Passar usuario logado (como pegar?)
 		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
@@ -40,6 +41,7 @@ public class Application extends Controller {
 	}
 	
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result cadastrarDica(long idTema) {
 		
 		DynamicForm filledForm = Form.form().bindFromRequest();
@@ -49,6 +51,7 @@ public class Application extends Controller {
 		//long idTema = Long.parseLong(formMap.get("idTema"));
 		
 		Tema tema = dao.findByEntityId(Tema.class, idTema);
+		String userName = session("username");
 		
 		if (filledForm.hasErrors()) {
 			return badRequest(views.html.index.render("Home Page")); //mudar
@@ -61,7 +64,7 @@ public class Application extends Controller {
 					
 					tema.addDica(dicaAssunto);
 					dicaAssunto.setTema(tema);
-					dicaAssunto.setUser("Anderson"); //TODO pegar nome do usuario logado
+					dicaAssunto.setUser(userName); //TODO pegar nome do usuario logado
 					dao.persist(dicaAssunto);				
 					break;
 				case "conselho":
@@ -70,7 +73,7 @@ public class Application extends Controller {
 					
 					tema.addDica(dicaConselho);
 					dicaConselho.setTema(tema);
-					dicaConselho.setUser("Anderson"); //TODO pegar nome do usuario logado
+					dicaConselho.setUser(userName); //TODO pegar nome do usuario logado
 					dao.persist(dicaConselho);				
 					break;
 				case "disciplina":
@@ -81,7 +84,7 @@ public class Application extends Controller {
 					
 					tema.addDica(dicaDisciplina);
 					dicaDisciplina.setTema(tema);
-					dicaDisciplina.setUser("Anderson"); //TODO pegar nome do usuario logado
+					dicaDisciplina.setUser(userName); //TODO pegar nome do usuario logado
 					dao.persist(dicaDisciplina);
 					break;
 				case "material":
@@ -90,7 +93,7 @@ public class Application extends Controller {
 									
 					tema.addDica(dicaMaterial);
 					dicaMaterial.setTema(tema);
-					dicaMaterial.setUser("Anderson"); //TODO pegar nome do usuario logado
+					dicaMaterial.setUser(userName); //TODO pegar nome do usuario logado
 					dao.persist(dicaMaterial);				
 					break;
 				default:
@@ -106,15 +109,14 @@ public class Application extends Controller {
 	}
 	
 	@Transactional
-	public static Result votarDificuldadeTema(long idTema) {
+	public static Result avaliarDificuldadeTema(long idTema) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
-		
 		if (filledForm.hasErrors()) {
 			return badRequest(views.html.index.render("Home Page")); //mudar
 		} else {
 			Map<String, String> formMap = filledForm.data();
 			int dificuldade = Integer.parseInt(formMap.get("dificuldade"));	
-			String userLogin = formMap.get("userLogin");
+			String userLogin = session("login");
 			Tema tema = dao.findByEntityId(Tema.class, idTema);
 			
 			//Tema tema = dao.findByEntityId(Tema.class, id)(Tema) dao.findByAttributeName("Tema", "name", nomeTema).get(0);

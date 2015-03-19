@@ -17,7 +17,7 @@
         <div class="uk-container uk-container-center">
     		<div id="topo" class="uk-panel">
 				<div class="uk-text-right">
-					<a>Anderson Sales</a> | <a>Logout</a>
+					<a>Bem-vindo(a), @session.get("username")</a> | <a href="/logout">Logout</a>
 					<hr class="uk-article-divider-orange">
 				</div>
 				<div class="center">
@@ -77,7 +77,20 @@
             			@for(dica <- temaAtual.getDicas()){
             			<div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
             				<a class="uk-text-warning uk-icon-hover uk-icon-flag uk-panel-badge"></a>
-            				<p class="normal-font">@dica.getTexto()</p>
+            				@if(dica.getTipo().equals("DicaDisciplina")){
+            					<p>Disciplinas importantes:</p><p class="normal-font">@dica.getTexto()</p>
+            					<p>Razão:</p><p class="normal-font">@dica.getRazao()</p>
+            				}
+            				@if(dica.getTipo().equals("DicaMaterial")){
+            					<p>Link para material útil:</p><a href="@dica.getTexto()">@dica.getTexto()</a>
+            				}
+            				@if(dica.getTipo().equals("DicaConselho")){
+            					<p>Conselho:</p><p class="normal-font">@dica.getTexto()</p>
+            				}
+            				@if(dica.getTipo().equals("DicaAssunto")){
+            					<p>Assuntos importantes:</p><p class="normal-font">@dica.getTexto()</p>
+            				}
+            				
             				<p class="uk-article-meta uk-text-right">por @dica.getUser()</p>
             				<hr class="uk-article-divider-orange">
             				<div class="uk-grid center">
@@ -107,24 +120,24 @@
 	        	<a class="uk-modal-close uk-close"></a>
 				<div class="uk-modal-header" style="background-color:#5f5f5f"><h2>Avaliação da dificuldade de "@temaAtual.getName()"</h2></div>
 				<div class="uk-article">
-					<!-- TODO Condicional -->
 					<h3 class="uk-h3">Dificuldade do tema</h3>
-					<p class="normal-font">Média:
-		        	<i class="uk-icon-star"></i>
-			        <i class="uk-icon-star"></i>
-			        <i class="uk-icon-star"></i>
-			        </p>
-					<p class="normal-font">Mediana:
-		        	<i class="uk-icon-star"></i>
-			        <i class="uk-icon-star"></i>
-			        </p>
+					<p class="normal-font">Média: @temaAtual.getMedia()</p>
+					<p class="normal-font">Mediana: @temaAtual.getMediana()</p>
 					<hr class="uk-article-divider-orange">
-					<p>Avalie a dificuldade deste tema:</p>
-					<a class="uk-icon-hover uk-icon-star"></a>
-			        <a class="uk-icon-hover uk-icon-star"></a>
-			        <a class="uk-icon-hover uk-icon-star"></a>
-					<a class="uk-icon-hover uk-icon-star"></a>
-					<a class="uk-icon-hover uk-icon-star"></a>
+					<form class="uk-form" method="post" action="/avaliar/@temaAtual.getId()">
+						<div class="uk-form-row">
+							<p>Avalie a dificuldade deste tema:</p>
+							<input list="valores" name="dificuldade" class="form-control" ng-model="valor">
+							<datalist id="valores" class="form-control">
+								<option value="-2">Muito fácil</option>
+								<option value="-1">Fácil</option>
+								<option value="0">Razoável</option>
+								<option value="1">Difícil</option>
+								<option value="2">Muito difícil</option>
+							</datalist>
+							<button class="uk-button uk-button-primary" type="submit" ng-disabled="!valor || valor < -2 || valor > 2">Enviar</button>
+						</div>
+					</form>
 				</div>
 			</div>
         </div>

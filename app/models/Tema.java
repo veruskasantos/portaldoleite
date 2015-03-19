@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 
+import play.Logger;
+
 @Entity(name="Tema")
 public class Tema {
 	@Id
@@ -100,7 +102,6 @@ public class Tema {
 		
 		Collections.sort(difficultyVotes);
 		int totalVotes = difficultyVotes.size();
-				
 		if (totalVotes == 0) {
 			return 0;
 		}
@@ -111,7 +112,7 @@ public class Tema {
 		}
 		else {
 			String primeiraMediana = difficultyVotes.get(totalVotes/2);
-			String segundaMediana = difficultyVotes.get((totalVotes/2)+1);
+			String segundaMediana = difficultyVotes.get((totalVotes/2)-1);
 			
 			return (Integer.parseInt(primeiraMediana) + Integer.parseInt(segundaMediana))/2.0;
 		}
@@ -121,6 +122,9 @@ public class Tema {
 		List<String> difficultyVotes = new ArrayList<String>(this.usersDifficulty.values());
 		
 		int totalVotes = difficultyVotes.size();
+		if(totalVotes == 0){
+			return 0;
+		}
 		
 		double votesCount = 0;
 		

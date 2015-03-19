@@ -25,6 +25,18 @@ public class DicaAssunto extends Dica{
 
 	@Override
 	public String getTexto() {
-		return "Assunto importante: " + getAssunto();
+		return getAssunto();
 	}
+
+	@Override
+	public String getTipo() {
+		return "DicaAssunto";
+	}
+
+	@Override
+	public String getRazao() {
+		return null;
+	}
+	
+	
 }

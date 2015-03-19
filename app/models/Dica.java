@@ -129,4 +129,8 @@ public abstract class Dica implements Comparable<Dica>{
 			return 0;
 		}
 	}
+	
+	public abstract String getTipo();
+	
+	public abstract String getRazao();
 }

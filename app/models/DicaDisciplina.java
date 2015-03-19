@@ -37,6 +37,11 @@ public class DicaDisciplina extends Dica{
 
 	@Override
 	public String getTexto() {
-		return "Disciplinas importantes: " + this.nomeDisciplina + " Razão: " + this.razao;
+		return this.nomeDisciplina;
+	}
+	
+	@Override
+	public String getTipo() {
+		return "DicaDisciplina";
 	}
 }

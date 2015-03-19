@@ -25,6 +25,16 @@ public class DicaMaterial extends Dica{
 
 	@Override
 	public String getTexto() {
-		return "Link para material útil: " + getUrl();
+		return getUrl();
+	}
+	
+	@Override
+	public String getTipo() {
+		return "DicaMaterial";
+	}
+
+	@Override
+	public String getRazao() {
+		return null;
 	}
 }
