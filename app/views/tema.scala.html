@@ -103,6 +103,7 @@
 		            					<!-- Condicional -->
 		            					<span class="normal-font">Avalie:</span>
 		            					@if(!dica.wasVotedByUser(session.get("login"))){
+		            						<form name="formUpVote@dica.getId()" method="post" action="/upVoteDica/@dica.getId()"></form>
 			            					<a class="uk-icon-hover uk-icon-thumbs-up uk-text-success" href="javascript:DoPost(@dica.getId())"></a>
 			            					<a class="uk-icon-hover uk-icon-thumbs-down uk-text-success" 
 			            						data-uk-modal="{target:'#dica-add-discordancia-modal-@dica.getId()'}"></a>

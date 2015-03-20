@@ -31,7 +31,6 @@ public class Application extends Controller {
 	@Transactional
 	@Security.Authenticated(Secured.class)
 	public static Result tema(long id) {
-		//TODO Passar usuario logado (como pegar?)
 		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
 		Tema tema = dao.findByEntityId(Tema.class, id);
 		if(tema == null){
@@ -137,7 +136,6 @@ public class Application extends Controller {
 			String username = session("username");
 			String login = session("login");
 			String discordancia = formMap.get("discordancia");
-			Logger.info("Discordancia adicionada: " + discordancia);
 			Dica dica = dao.findByEntityId(Dica.class, idDica);
 			
 			dica.addUsuarioQueVotou(login);
@@ -154,10 +152,12 @@ public class Application extends Controller {
 	public static Result upVoteDica(long idDica) {
 		Dica dica = dao.findByEntityId(Dica.class, idDica);
 		String login = session("login");
-		dica.addUsuarioQueVotou(login);
-		dica.incrementaConcordancias();
-		dao.merge(dica);
-		dao.flush();
+		if(!dica.wasVotedByUser(login)){
+			dica.addUsuarioQueVotou(login);
+			dica.incrementaConcordancias();
+			dao.merge(dica);
+			dao.flush();
+		}
 		
 		return tema(dica.getTema().getId());
 	}
