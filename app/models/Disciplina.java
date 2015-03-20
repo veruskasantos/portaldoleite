@@ -22,6 +22,9 @@ public class Disciplina {
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Tema> temas;
+
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<MetaDica> metaDicas;
 	
 	public Disciplina() {
 	}
@@ -29,6 +32,7 @@ public class Disciplina {
 	public Disciplina(String nome) {
 		this.nome = nome;
 		this.temas = new ArrayList<Tema>();
+		this.metaDicas = new ArrayList<MetaDica>();
 	}
 
 	public long getId() {
@@ -68,4 +72,11 @@ public class Disciplina {
 		return null;
 	}
 
+	public List<MetaDica> getMetaDicas() {
+		return this.metaDicas;
+	}
+
+	public void addMetaDica(MetaDica metaDica) {
+		this.metaDicas.add(metaDica);
+	}
 }

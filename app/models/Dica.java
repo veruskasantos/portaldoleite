@@ -50,6 +50,9 @@ public abstract class Dica implements Comparable<Dica>{
 	@Column
 	private int flag;
 	
+	@ElementCollection
+	private List<String> usuarioqueQueJaDenunciaram;
+	
 	@Transient
 	private DicaDisciplina instanciaDisciplina;
 	
@@ -91,11 +94,11 @@ public abstract class Dica implements Comparable<Dica>{
 	}
 	
 	public void incrementaConcordancias(){
-		this.concordancias++;
+		this.concordancias = concordancias + 1;
 	}
 	
 	public void incrementaDiscordancias(){
-		this.discordancias++;
+		this.discordancias = discordancias + 1;
 	}
 
 	public int getDiscordancias() {
@@ -118,8 +121,8 @@ public abstract class Dica implements Comparable<Dica>{
 		return flag;
 	}
 
-	public void setFlag(int flag) {
-		this.flag = flag;
+	public void incrementaFlag() {
+		this.flag = flag + 1;
 	}
 
 	public String getUser() {
@@ -161,6 +164,14 @@ public abstract class Dica implements Comparable<Dica>{
 	
 	public DicaDisciplina getInstanciaDisciplina() {
 		return instanciaDisciplina;
+	}
+	
+	public void addUsuarioFlag(String user) {
+		this.usuarioqueQueJaDenunciaram.add(user);
+	}
+	
+	public boolean wasFlaggedByUser(String user) {
+		return usuarioqueQueJaDenunciaram.contains(user);
 	}
 
 	public abstract String getTipo();
