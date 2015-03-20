@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Transient;
 
+import play.Logger;
+
 @Entity(name="Dica")
 //@DiscriminatorColumn(name="REF_TYPE")
 public abstract class Dica implements Comparable<Dica>{
@@ -50,16 +52,6 @@ public abstract class Dica implements Comparable<Dica>{
 	
 	@Transient
 	private DicaDisciplina instanciaDisciplina;
-
-	@Transient
-	private DicaAssunto instanciaAssunto;
-	
-	@Transient
-	private DicaMaterial instanciaMaterial;
-	
-	@Transient
-	private DicaConselho instanciaConselho;
-	
 	
 	public Dica(){}
 
@@ -146,48 +138,29 @@ public abstract class Dica implements Comparable<Dica>{
 		return usuariosQueJaVotaram.contains(user); 
 	}
 
+	/**
+	 * Método a ser usado no sort de lista de Dica para que as primeiras
+	 * dicas da lista sejam as com mais concordâncias.
+	 */
 	@Override
 	public int compareTo(Dica otherDica) {
 		if (this.getConcordancias()>otherDica.getConcordancias()) {
-			return 1;
-		} else if (this.getConcordancias()<otherDica.getConcordancias()) {
 			return -1;
+		} else if (this.getConcordancias()<otherDica.getConcordancias()) {
+			return 1;
 		} else {
 			return 0;
 		}
 	}
 	
 	public void checaTipoDica() {
-		switch (this.getTipo()) {
-		case "DicaAssunto":
-			this.instanciaAssunto = (DicaAssunto) this;			
-			break;
-		case "DicaMaterial":
-			this.instanciaMaterial = (DicaMaterial) this;			
-			break;
-		case "DicaDisciplina":
-			this.instanciaDisciplina = (DicaDisciplina) this;			
-			break;
-		case "DicaConselho":
-			this.instanciaConselho = (DicaConselho) this;			
-			break;
-		}
+		if (this.getTipo().equals("DicaDisciplina")) {
+			this.instanciaDisciplina = (DicaDisciplina) this;
+		}		
 	}
 	
 	public DicaDisciplina getInstanciaDisciplina() {
 		return instanciaDisciplina;
-	}
-
-	public DicaAssunto getInstanciaAssunto() {
-		return instanciaAssunto;
-	}
-
-	public DicaMaterial getInstanciaMaterial() {
-		return instanciaMaterial;
-	}
-
-	public DicaConselho getInstanciaConselho() {
-		return instanciaConselho;
 	}
 
 	public abstract String getTipo();

@@ -89,7 +89,7 @@ public class Tema {
 		
 		for (Dica dica : dicas) {
 			dica.checaTipoDica();
-		} //refatorar
+		}
 		
 		return dicas;
 	}
