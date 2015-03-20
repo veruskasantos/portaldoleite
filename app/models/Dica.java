@@ -3,6 +3,7 @@ package models;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -79,6 +80,10 @@ public abstract class Dica implements Comparable<Dica>{
 		return usersCommentaries;
 	}
 	
+	public Entry<String,String> getDiscordanciasSet(){
+		return (Entry<String, String>) usersCommentaries.entrySet();
+	}
+	
 	public void addUserCommentary(String login, String commentary) {
 		usersCommentaries.put(login, commentary);
 	}
@@ -91,6 +96,14 @@ public abstract class Dica implements Comparable<Dica>{
 
 	public void setConcordancias(int concordancias) {
 		this.concordancias = concordancias;
+	}
+	
+	public void incrementaConcordancias(){
+		this.concordancias++;
+	}
+	
+	public void incrementaDiscordancias(){
+		this.discordancias++;
 	}
 
 	public int getDiscordancias() {

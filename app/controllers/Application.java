@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 import java.util.Map;
 
+import models.Dica;
 import models.DicaAssunto;
 import models.DicaConselho;
 import models.DicaDisciplina;
@@ -10,12 +11,11 @@ import models.DicaMaterial;
 import models.Disciplina;
 import models.Tema;
 import models.dao.GenericDAOImpl;
-import controllers.Secured;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
-import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Security;
 
@@ -123,7 +123,42 @@ public class Application extends Controller {
 			tema.incrementarDificuldade(userLogin, dificuldade);
 			dao.merge(tema);
 			dao.flush();
-			return redirect(routes.Application.index());
+			return tema(idTema);
 		}
+	}
+	
+	@Transactional
+	public static Result addDiscordanciaEmDica(long idDica) {
+		DynamicForm filledForm = Form.form().bindFromRequest();
+		if (filledForm.hasErrors()) {
+			return badRequest(views.html.index.render("Home Page")); //mudar
+		} else {
+			Map<String, String> formMap = filledForm.data();
+			String username = session("username");
+			String login = session("login");
+			String discordancia = formMap.get("discordancia");
+			Logger.info("Discordancia adicionada: " + discordancia);
+			Dica dica = dao.findByEntityId(Dica.class, idDica);
+			
+			dica.addUsuarioQueVotou(login);
+			dica.addUserCommentary(username, discordancia);
+			dica.incrementaDiscordancias();
+			dao.merge(dica);
+			dao.flush();
+			
+			return tema(dica.getTema().getId());
+		}
+	}
+	
+	@Transactional
+	public static Result upVoteDica(long idDica) {
+		Dica dica = dao.findByEntityId(Dica.class, idDica);
+		String login = session("login");
+		dica.addUsuarioQueVotou(login);
+		dica.incrementaConcordancias();
+		dao.merge(dica);
+		dao.flush();
+		
+		return tema(dica.getTema().getId());
 	}
 }

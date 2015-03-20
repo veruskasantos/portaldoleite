@@ -93,7 +93,7 @@ public class Tema {
 		
 		return dicas;
 	}
-	
+		
 	public void addDica(Dica dica) {
 		this.dicas.add(dica);
 	}
