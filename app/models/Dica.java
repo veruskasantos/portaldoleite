@@ -18,7 +18,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-@Table(name="dica")
+@Table(name="\"dica\"")
 @Entity(name="Dica")
 //@DiscriminatorColumn(name="REF_TYPE")
 public abstract class Dica implements Comparable<Dica>{
