@@ -2,8 +2,10 @@ package models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Entity
+@Table(name="dica_disciplina")
+@Entity(name="DicaDisciplina")
 public class DicaDisciplina extends Dica{
 	@Column
 	private String nomeDisciplina;

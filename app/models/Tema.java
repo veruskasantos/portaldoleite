@@ -17,9 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import play.Logger;
 
+@Table(name="tema")
 @Entity(name="Tema")
 public class Tema {
 	@Id

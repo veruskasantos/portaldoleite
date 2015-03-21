@@ -14,8 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity
+@Table(name="metadica")
+@Entity(name="MetaDica")
 public class MetaDica implements Comparable<MetaDica>{
 	@Id
 	@GeneratedValue

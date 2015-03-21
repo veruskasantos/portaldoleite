@@ -2,8 +2,10 @@ package models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Entity
+@Table(name="dica_material")
+@Entity(name="DicaMaterial")
 public class DicaMaterial extends Dica{
 	@Column
 	private String url;
