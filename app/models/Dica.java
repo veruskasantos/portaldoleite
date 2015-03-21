@@ -15,10 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import play.Logger;
-
+@Table(name="dica")
 @Entity(name="Dica")
 //@DiscriminatorColumn(name="REF_TYPE")
 public abstract class Dica implements Comparable<Dica>{
