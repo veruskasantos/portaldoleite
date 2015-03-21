@@ -21,8 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity(name="Dica")
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-//@DiscriminatorColumn(name="REF_TYPE")
 public abstract class Dica implements Comparable<Dica>{
 	@Id
 	@GeneratedValue
