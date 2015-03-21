@@ -5,22 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.Table;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import play.Logger;
-import play.data.validation.Constraints.Email;
-
-@Entity(name="User")
+@Table(name="user_table")
+@Entity(name="user_table")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	
 
 	@Column
-	@Email
 	private String email;
 	@Column
 	private String pass;
