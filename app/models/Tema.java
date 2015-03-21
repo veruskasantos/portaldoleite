@@ -21,7 +21,6 @@ import javax.persistence.Table;
 
 import play.Logger;
 
-@Table(name="tema")
 @Entity(name="Tema")
 public class Tema {
 	@Id

@@ -17,7 +17,6 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Table(name="metadica")
 @Entity(name="MetaDica")
 public class MetaDica implements Comparable<MetaDica>{
 	@Id

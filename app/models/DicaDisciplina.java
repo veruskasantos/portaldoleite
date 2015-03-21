@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Table(name="dica_disciplina")
 @Entity(name="DicaDisciplina")
 public class DicaDisciplina extends Dica{
 	@Column
