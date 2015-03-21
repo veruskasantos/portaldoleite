@@ -104,6 +104,14 @@ public class MetaDica implements Comparable<MetaDica>{
 	public void setDiscordancias(int discordancias) {
 		this.discordancias = discordancias;
 	}
+	
+	public float getIndiceConcordancia() {
+		int soma = concordancias + discordancias;
+		if(soma == 0){
+			return 0;
+		}
+		return this.getConcordancias()/(this.getConcordancias()+this.getDiscordancias());
+	}
 
 	public int getFlag() {
 		return flag;
@@ -158,5 +166,58 @@ public class MetaDica implements Comparable<MetaDica>{
 	
 	public void incrementaFlag() {
 		this.flag = flag + 1;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<Dica> getDicasAdicionadas() {
+		return dicasAdicionadas;
+	}
+
+	public void setDicasAdicionadas(List<Dica> dicasAdicionadas) {
+		this.dicasAdicionadas = dicasAdicionadas;
+	}
+
+	public List<MetaDica> getMetaDicasAdicionadas() {
+		return metaDicasAdicionadas;
+	}
+
+	public void setMetaDicasAdicionadas(List<MetaDica> metaDicasAdicionadas) {
+		this.metaDicasAdicionadas = metaDicasAdicionadas;
+	}
+
+	public List<String> getUsuariosQueJaVotaram() {
+		return usuariosQueJaVotaram;
+	}
+
+	public void setUsuariosQueJaVotaram(List<String> usuariosQueJaVotaram) {
+		this.usuariosQueJaVotaram = usuariosQueJaVotaram;
+	}
+
+	public List<String> getUsuarioqueQueJaDenunciaram() {
+		return usuarioqueQueJaDenunciaram;
+	}
+
+	public void setUsuarioqueQueJaDenunciaram(
+			List<String> usuarioqueQueJaDenunciaram) {
+		this.usuarioqueQueJaDenunciaram = usuarioqueQueJaDenunciaram;
+	}
+
+	public Map<String, String> getUsersCommentaries() {
+		return usersCommentaries;
+	}
+
+	public void setUsersCommentaries(Map<String, String> usersCommentaries) {
+		this.usersCommentaries = usersCommentaries;
+	}
+
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 }

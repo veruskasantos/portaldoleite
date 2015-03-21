@@ -10,10 +10,9 @@ import models.DicaConselho;
 import models.DicaDisciplina;
 import models.DicaMaterial;
 import models.Disciplina;
-import models.Tema;
 import models.MetaDica;
+import models.Tema;
 import models.dao.GenericDAOImpl;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -39,6 +38,17 @@ public class Application extends Controller {
 			return badRequest(views.html.index.render("Tema não existe"));
 		}
 		return ok(views.html.tema.render(listaDisciplina, tema));
+	}
+	
+	@Transactional
+	@Security.Authenticated(Secured.class)
+	public static Result disciplina(long id) {
+		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
+		Disciplina disciplina = dao.findByEntityId(Disciplina.class, id);
+		if(disciplina == null){
+			return badRequest(views.html.index.render("Disciplina não existe"));
+		}
+		return ok(views.html.disciplina.render(listaDisciplina, disciplina));
 	}
 	
 	@Transactional
@@ -165,7 +175,7 @@ public class Application extends Controller {
 	}
 
 	@Transactional
-	public static Result downVoteMetaDica(long idMetaDica) {
+	public static Result addDiscordanciaEmMetaDica(long idMetaDica) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
 		if (filledForm.hasErrors()) {
 			return badRequest(views.html.index.render("Home Page")); //mudar
@@ -182,7 +192,7 @@ public class Application extends Controller {
 			dao.merge(metaDica);
 			dao.flush();
 			
-			return index(); //FIXME Mudar para onde é para ir realmente.
+			return disciplina(metaDica.getDisciplina().getId());
 		}
 	}
 	
@@ -196,7 +206,7 @@ public class Application extends Controller {
 			dao.merge(metaDica);
 			dao.flush();
 		}
-		return index(); //FIXME Mudar para onde é para ir realmente.
+		return disciplina(metaDica.getDisciplina().getId());
 	}
 	
 	/**
@@ -255,7 +265,7 @@ public class Application extends Controller {
 			dao.merge(disciplina);
 			dao.flush();
 			
-			return index(); //FIXME Mudar para onde é para ir realmente.
+			return disciplina(disciplina.getId());
 		}
 	}
 	
@@ -326,6 +336,6 @@ public class Application extends Controller {
 		
 		dao.flush();
 		
-		return index(); //FIXME Mudar para onde é para ir realmente.
+		return disciplina(disciplina.getId());
 	}
 }
