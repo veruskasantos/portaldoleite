@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
@@ -29,10 +30,10 @@ public class MetaDica implements Comparable<MetaDica>{
 	@Column
 	private String comment;
 	
-	@OneToMany
+	@ManyToMany(cascade=CascadeType.ALL)
 	List<Dica> dicasAdicionadas;
 	
-	@OneToMany
+	@ManyToMany(cascade=CascadeType.ALL)
 	List<MetaDica> metaDicasAdicionadas;
 	
 	@ElementCollection
@@ -42,9 +43,9 @@ public class MetaDica implements Comparable<MetaDica>{
 	private List<String> usuarioqueQueJaDenunciaram;
 	
 	@ElementCollection
-    @MapKeyColumn(name="user")
+    @MapKeyColumn(name="user_meta")
     @Column(name="commentary")
-    @CollectionTable(name="META_COMM", joinColumns=@JoinColumn(name="dica_id"))
+    @CollectionTable(name="meta_comm", joinColumns=@JoinColumn(name="dica_id"))
 	private Map<String, String> usersCommentaries;
 	
 	@ManyToOne(cascade=CascadeType.ALL)

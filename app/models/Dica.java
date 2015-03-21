@@ -21,7 +21,7 @@ import javax.persistence.Transient;
 @Table(name="dica")
 @Entity(name="Dica")
 //@DiscriminatorColumn(name="REF_TYPE")
-public abstract class Dica implements Comparable<Dica>{
+public class Dica implements Comparable<Dica>{
 	@Id
 	@GeneratedValue
 	private long id;
@@ -33,7 +33,7 @@ public abstract class Dica implements Comparable<Dica>{
 	private String user;
 	
 	@ElementCollection
-    @MapKeyColumn(name="user")
+    @MapKeyColumn(name="user_dica")
     @Column(name="commentary")
     @CollectionTable(name="users_comm", joinColumns=@JoinColumn(name="dica_id"))
 	private Map<String, String> usersCommentaries;
@@ -83,7 +83,7 @@ public abstract class Dica implements Comparable<Dica>{
 		usersCommentaries.put(login, commentary);
 	}
 	
-	public abstract String getTexto();
+	//public abstract String getTexto();
 	
 	public int getConcordancias() {
 		return concordancias;
@@ -157,9 +157,9 @@ public abstract class Dica implements Comparable<Dica>{
 	}
 	
 	public void checaTipoDica() {
-		if (this.getTipo().equals("DicaDisciplina")) {
-			this.instanciaDisciplina = (DicaDisciplina) this;
-		}		
+//		if (this.getTipo().equals("DicaDisciplina")) {
+//			this.instanciaDisciplina = (DicaDisciplina) this;
+//		}		
 	}
 	
 	public DicaDisciplina getInstanciaDisciplina() {
@@ -174,5 +174,5 @@ public abstract class Dica implements Comparable<Dica>{
 		return usuarioqueQueJaDenunciaram.contains(user);
 	}
 
-	public abstract String getTipo();
+	//public abstract String getTipo();
 }

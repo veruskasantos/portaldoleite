@@ -38,7 +38,7 @@ public class Tema {
 	private List<Dica> dicas;
 	
 	@ElementCollection
-    @MapKeyColumn(name="user")
+    @MapKeyColumn(name="user_tema")
     @Column(name="dificuldade")
     @CollectionTable(name="users_diff", joinColumns=@JoinColumn(name="tema_id"))
 	private Map<String, String> usersDifficulty;
