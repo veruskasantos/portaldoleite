@@ -110,7 +110,6 @@
 	            						<span class="normal-font">Avaliação:</span> @dica.getIndiceConcordancia()
 		            				</div>
 		            				<div class="uk-width-small-1-3">
-		            					Condicional
 		            					<span class="normal-font">Avalie:</span>
 		            					@if(!dica.wasVotedByUser(session.get("login"))){
 		            						<form name="formUpVote@dica.getId()" method="post" action="/upVoteDica/@dica.getId()"></form>
