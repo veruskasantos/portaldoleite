@@ -102,33 +102,33 @@ public class Tema {
 		return usersDifficulty;
 	}
 
-	public double getMediana() {
+	public String getMediana() {
 		List<String> difficultyVotes = new ArrayList<String>(this.usersDifficulty.values());
 		
 		Collections.sort(difficultyVotes);
 		int totalVotes = difficultyVotes.size();
 		if (totalVotes == 0) {
-			return 0;
+			return "0";
 		}
 		else if (totalVotes % 2 == 1) {
 			String mediana = difficultyVotes.get(totalVotes/2);
 			
-			return Integer.parseInt(mediana);
+			return mediana;
 		}
 		else {
 			String primeiraMediana = difficultyVotes.get(totalVotes/2);
 			String segundaMediana = difficultyVotes.get((totalVotes/2)-1);
 			
-			return (Integer.parseInt(primeiraMediana) + Integer.parseInt(segundaMediana))/2.0;
+			return String.format("%.2f", (Integer.parseInt(primeiraMediana) + Integer.parseInt(segundaMediana))/2.0);
 		}
 	}
 	
-	public double getMedia() {
+	public String getMedia() {
 		List<String> difficultyVotes = new ArrayList<String>(this.usersDifficulty.values());
 		
 		int totalVotes = difficultyVotes.size();
 		if(totalVotes == 0){
-			return 0;
+			return "0";
 		}
 		
 		double votesCount = 0;
@@ -137,6 +137,6 @@ public class Tema {
 			votesCount = votesCount + Double.parseDouble(vote);
 		}
 		
-		return votesCount/totalVotes;
+		return String.format("%.2f", votesCount/totalVotes);
 	}
 }

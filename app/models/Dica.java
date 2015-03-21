@@ -109,12 +109,12 @@ public abstract class Dica implements Comparable<Dica>{
 		this.discordancias = discordancias;
 	}
 	
-	public float getIndiceConcordancia() {
+	public String getIndiceConcordancia() {
 		int soma = concordancias + discordancias;
 		if(soma == 0){
-			return 0;
+			return "0";
 		}
-		return this.getConcordancias()/(this.getConcordancias()+this.getDiscordancias());
+		return String.format("%.2f", this.getConcordancias()/((float) soma));
 	}
 	
 	public int getFlag() {

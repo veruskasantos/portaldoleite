@@ -134,7 +134,7 @@ public class Application extends Controller {
 			tema.incrementarDificuldade(userLogin, dificuldade);
 			dao.merge(tema);
 			dao.flush();
-			return tema(idTema);
+			return redirect(routes.Application.tema(idTema));
 		}
 	}
 	
@@ -156,7 +156,7 @@ public class Application extends Controller {
 			dao.merge(dica);
 			dao.flush();
 			
-			return tema(dica.getTema().getId());
+			return redirect(routes.Application.tema(dica.getTema().getId()));
 		}
 	}
 	
@@ -171,7 +171,7 @@ public class Application extends Controller {
 			dao.flush();
 		}
 		
-		return tema(dica.getTema().getId());
+		return redirect(routes.Application.tema(dica.getTema().getId()));
 	}
 
 	@Transactional
@@ -192,7 +192,7 @@ public class Application extends Controller {
 			dao.merge(metaDica);
 			dao.flush();
 			
-			return disciplina(metaDica.getDisciplina().getId());
+			return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
 		}
 	}
 	
@@ -206,7 +206,7 @@ public class Application extends Controller {
 			dao.merge(metaDica);
 			dao.flush();
 		}
-		return disciplina(metaDica.getDisciplina().getId());
+		return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
 	}
 	
 	/**
@@ -265,7 +265,7 @@ public class Application extends Controller {
 			dao.merge(disciplina);
 			dao.flush();
 			
-			return disciplina(disciplina.getId());
+			return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
 		}
 	}
 	
@@ -301,7 +301,7 @@ public class Application extends Controller {
 		
 		dao.flush();
 		
-		return tema(tema.getId());
+		return redirect(routes.Application.tema(dica.getTema().getId()));
 	}
 	
 	/**
@@ -336,6 +336,6 @@ public class Application extends Controller {
 		
 		dao.flush();
 		
-		return disciplina(disciplina.getId());
+		return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
 	}
 }
