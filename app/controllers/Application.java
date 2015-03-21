@@ -13,6 +13,7 @@ import models.Disciplina;
 import models.MetaDica;
 import models.Tema;
 import models.dao.GenericDAOImpl;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -26,7 +27,8 @@ public class Application extends Controller {
 	@Transactional
 	@Security.Authenticated(Secured.class)
     public static Result index() {
-        return ok(views.html.index.render("Home Page"));
+		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
+        return ok(views.html.index.render(disciplinas));
     }
 	
 	@Transactional
@@ -35,7 +37,7 @@ public class Application extends Controller {
 		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
 		Tema tema = dao.findByEntityId(Tema.class, id);
 		if(tema == null){
-			return badRequest(views.html.index.render("Tema não existe"));
+			return erro();
 		}
 		return ok(views.html.tema.render(listaDisciplina, tema));
 	}
@@ -46,9 +48,37 @@ public class Application extends Controller {
 		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
 		Disciplina disciplina = dao.findByEntityId(Disciplina.class, id);
 		if(disciplina == null){
-			return badRequest(views.html.index.render("Disciplina não existe"));
+			return erro();
 		}
-		return ok(views.html.disciplina.render(listaDisciplina, disciplina));
+		return ok(views.html.disciplina.render(listaDisciplina, disciplina, false));
+	}
+	
+	@Transactional
+	@Security.Authenticated(Secured.class)
+	public static Result disciplinaErro(Disciplina disciplina) {
+		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
+		return ok(views.html.disciplina.render(listaDisciplina, disciplina, true));
+	}
+	
+	@Transactional
+	@Security.Authenticated(Secured.class)
+	public static Result metadica(long id) {
+		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
+		MetaDica metadica = dao.findByEntityId(MetaDica.class, id);
+		Disciplina disciplina = metadica.getDisciplina();
+		if(disciplina == null){
+			return erro();
+		}
+		if(metadica == null){
+			return erro();
+		}
+		return ok(views.html.metadica.render(listaDisciplina, disciplina, metadica));
+	}
+	
+	@Transactional
+	public static Result erro(){
+		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
+		return ok(views.html.erro.render(disciplinas));
 	}
 	
 	@Transactional
@@ -65,7 +95,7 @@ public class Application extends Controller {
 		String userName = session("username");
 		
 		if (filledForm.hasErrors()) {
-			return badRequest(views.html.index.render("Home Page")); //mudar
+			return tema(idTema);
 		} else {
 			String tipoKey = formMap.get("tipo");
 			switch (tipoKey) {
@@ -123,7 +153,7 @@ public class Application extends Controller {
 	public static Result avaliarDificuldadeTema(long idTema) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
 		if (filledForm.hasErrors()) {
-			return badRequest(views.html.index.render("Home Page")); //mudar
+			return tema(idTema);
 		} else {
 			Map<String, String> formMap = filledForm.data();
 			int dificuldade = Integer.parseInt(formMap.get("dificuldade"));	
@@ -141,14 +171,16 @@ public class Application extends Controller {
 	@Transactional
 	public static Result addDiscordanciaEmDica(long idDica) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
+		
+		Dica dica = dao.findByEntityId(Dica.class, idDica);
+		
 		if (filledForm.hasErrors()) {
-			return badRequest(views.html.index.render("Home Page")); //mudar
+			return tema(dica.getTema().getId());
 		} else {
 			Map<String, String> formMap = filledForm.data();
 			String username = session("username");
 			String login = session("login");
 			String discordancia = formMap.get("discordancia");
-			Dica dica = dao.findByEntityId(Dica.class, idDica);
 			
 			dica.addUsuarioQueVotou(login);
 			dica.addUserCommentary(username, discordancia);
@@ -177,14 +209,16 @@ public class Application extends Controller {
 	@Transactional
 	public static Result addDiscordanciaEmMetaDica(long idMetaDica) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
+		
+		MetaDica metaDica = dao.findByEntityId(MetaDica.class, idMetaDica);
+		
 		if (filledForm.hasErrors()) {
-			return badRequest(views.html.index.render("Home Page")); //mudar
+			return disciplina(metaDica.getDisciplina().getId());
 		} else {
 			Map<String, String> formMap = filledForm.data();
 			String username = session("username");
 			String login = session("login");
 			String discordancia = formMap.get("discordancia");
-			MetaDica metaDica = dao.findByEntityId(MetaDica.class, idMetaDica);
 			
 			metaDica.addUsuarioQueVotou(login);
 			metaDica.addUserCommentary(username, discordancia);
@@ -224,39 +258,52 @@ public class Application extends Controller {
 		
 		Map<String,String> formMap = filledForm.data();
 		
-		String comment = formMap.get("comment");
+		String comment = formMap.get("comentario");
 		
 		Disciplina disciplina = dao.findByEntityId(Disciplina.class, idDisciplina);
 		String userName = session("username");
 		
 		if (filledForm.hasErrors()) {
-			return badRequest(views.html.index.render("Home Page")); //mudar
+			return disciplinaErro(disciplina);
 		} else {
 			MetaDica metaDica = new MetaDica(disciplina, userName, comment);			
 			
 			Map<String,String[]> map = request().body().asFormUrlEncoded();
 			
-			String[] checkedDicas = map.get("dica"); //Cada dica que vai ser selecionada num checkbox deve ter como
-       			                                    //atributo name "dica", e como value o id da dica. O mesmo com as metadicas.
+			String[] checkedDicas = map.get("dica");
+			Logger.debug("Array dicas: " + Arrays.toString(checkedDicas));
 			String[] checkedMetaDicas = map.get("metadica");
+			Logger.debug("Array meta: " + Arrays.toString(checkedMetaDicas));
 			
-			List<String> listaIdDicas = Arrays.asList(checkedDicas);
-			List<String> listaIdMetaDicas = Arrays.asList(checkedMetaDicas);
-			
-			for (String id : listaIdDicas) {
-				Long idDica = Long.parseLong(id);
-				
-				Dica checkedDica = dao.findByEntityId(Dica.class, idDica);
-				
-				metaDica.addDica(checkedDica);
+			if(checkedDicas == null && checkedMetaDicas == null){
+				return disciplinaErro(disciplina);
 			}
 			
-			for (String id : listaIdMetaDicas) {
-				Long idMetaDica = Long.parseLong(id);
-				
-				MetaDica checkedMetaDica = dao.findByEntityId(MetaDica.class, idMetaDica);
-				
-				metaDica.addMetaDica(checkedMetaDica);
+			if(checkedDicas != null){
+				List<String> listaIdDicas = Arrays.asList(checkedDicas);
+
+				for (String id : listaIdDicas) {
+					Long idDica = Long.parseLong(id);
+					
+					Dica checkedDica = dao.findByEntityId(Dica.class, idDica);
+
+					if(checkedDica != null){
+						metaDica.addDica(checkedDica);
+					}
+				}
+			}
+			if(checkedMetaDicas != null){
+				List<String> listaIdMetaDicas = Arrays.asList(checkedMetaDicas);
+
+				for (String id : listaIdMetaDicas) {
+					Long idMetaDica = Long.parseLong(id);
+					
+					MetaDica checkedMetaDica = dao.findByEntityId(MetaDica.class, idMetaDica);
+
+					if(checkedMetaDica != null){
+						metaDica.addMetaDica(checkedMetaDica);
+					}
+				}
 			}
 			
 			disciplina.addMetaDica(metaDica);
@@ -264,6 +311,7 @@ public class Application extends Controller {
 			dao.persist(metaDica);
 			dao.merge(disciplina);
 			dao.flush();
+			Logger.debug("Salvou metadica " + metaDica.getId());
 			
 			return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
 		}

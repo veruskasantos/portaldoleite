@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 public class Disciplina {
 	@Id
 	@GeneratedValue
+	@Column
 	private long id;
 	
 	private String nome;
@@ -75,6 +77,7 @@ public class Disciplina {
 	}
 
 	public List<MetaDica> getMetaDicas() {
+		Collections.sort(metaDicas);
 		return this.metaDicas;
 	}
 

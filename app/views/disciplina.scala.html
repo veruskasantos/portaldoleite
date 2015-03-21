@@ -1,4 +1,4 @@
-@(disciplinas: List[Disciplina])(disciplinaAtual: Disciplina)
+@(disciplinas: List[Disciplina])(disciplinaAtual: Disciplina)(erro: Boolean)
 
 <!DOCTYPE html>
 
@@ -30,6 +30,7 @@
 				</div>
     		</div>
             <div class="uk-grid" data-uk-grid-margin>
+            	<!-- ---------------- MENU ---------------- -->
             	<div class="uk-width-medium-1-4">
             		<div class="uk-panel uk-panel-box">
             			<div class="uk-panel-header">
@@ -51,19 +52,29 @@
             			</ul>
             		</div>
             	</div>
+            	<!-- ---------------- MAIN CONTENT ---------------- -->
             	<div class="uk-width-medium-3-4">
+            		@if(erro == true){
+            			<div class="uk-alert uk-alert-warning" data-uk-alert>
+	            			<a href="" class="uk-alert-close uk-close"></a>
+	            			<p>Não foi possível completar a sua indicação. (Selecione pelo menos uma dica ou uma indicação)</p>
+            			</div>
+            		}
             		<div class="uk-panel uk-panel-box">
             			<div class="uk-article">
 	            				<h2>Dicas indicadas</h2>
             				<div>
             					<div class="uk-align-right">
-            						<button class="uk-button uk-button-primary uk-button uk-align-right"><i class="uk-icon-list"></i> Indicar dicas
+            						<button class="uk-button uk-button-primary uk-button uk-align-right" data-uk-modal="{target:'#add-metadica-modal'}"><i class="uk-icon-list"></i> Indicar dicas
             						</button>
             					</div>
 	            			</div>
             				<hr class="uk-article-divider-orange">
             			</div>
             			<div id="dicasList">
+            				@if(disciplinaAtual.getMetaDicas().isEmpty()){
+								<p>Esta disciplina ainda não possui nenhuma indicação.</p>
+							}
 	            			@for(metadica <- disciplinaAtual.getMetaDicas()){
 	            			<div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
             					@if(!metadica.wasFlaggedByUser(session.get("login"))){
@@ -72,8 +83,8 @@
 	            						class="uk-text-warning uk-icon-hover uk-icon-flag uk-panel-badge" href="javascript:denunciarMetaDica(@metadica.getId())"></a>
 	            				}
             					<p>Comentário: </p><p class="normal-font">@metadica.getComment()</p>
-            					<a class="uk-icon-plus" href="/metadica/@metadica.getId()">Mostrar dicas</a>
 	            				<p class="uk-article-meta uk-text-right">por @metadica.getUser()</p>
+            					<a href="/metadica/@metadica.getId()"><i class="uk-icon-plus"></i> Mostrar dicas</a>
 	            				<hr class="uk-article-divider-orange">
 	            				<div class="uk-grid center">
 	            					<div class="uk-width-small-1-3">
@@ -104,6 +115,10 @@
 									<div class="uk-modal-dialog">
 										<a class="uk-modal-close uk-close"></a>
 										<div class="uk-modal-header" style="background-color:#5f5f5f"><h2>Discordâncias</h2></div>
+										<div class="uk-overflow-container">
+										@if(metadica.getUsersCommentaries().entrySet().isEmpty()){
+											<p>Nenhuma discordância adicionada.</p>
+										}
 										@for(discordancia <- metadica.getUsersCommentaries().entrySet()){
 		            						<div class="uk-panel uk-panel-box dica">
 				            					<p class="normal-font">@discordancia.getValue()</p>
@@ -111,6 +126,7 @@
 				            				</div>
 				            				<hr class="uk-article-divider">
 				            			}
+				            			</div>
 				            		</div>
 				            	</div>
 				            	<!-- ---------------- MODAL ADD DISCORDÂNCIA ---------------- -->
@@ -137,5 +153,52 @@
             	</div>
             </div>
         </div>
+        <div id="add-metadica-modal" class="uk-modal">
+			<div class="uk-modal-dialog">
+				<a class="uk-modal-close uk-close"></a>
+				<div class="uk-modal-header" style="background-color:#5f5f5f"><h2>Indicar dicas</h2></div>
+				<form class="uk-form" method="post" action="/cadastrarMetaDica/@disciplinaAtual.getId()">
+					<div class="center">
+						<p>Escreva um comentário e selecione as dicas que deseja indicar.</p>
+						<textarea cols="70" rows="5" name="comentario" ng-model="comentario"
+								class="form-control" required>Comentário.</textarea>
+			       		<hr class="uk-article-divider-orange">
+			       	</div>
+					<div class="uk-overflow-container">
+					@for(tema <- disciplinaAtual.getTemas()){
+						@for(dica <- tema.getDicas()){
+							<div class="uk-panel uk-panel-box dica">
+								<input class="uk-form-control uk-panel-badge" type="checkbox" name="dica" value="@dica.getId()">
+								@if(dica.getTipo().equals("DicaDisciplina")){
+	            					<p>Disciplinas importantes:</p><p class="normal-font">@dica.getTexto()</p>
+	            					<p>Razão:</p><p class="normal-font">@dica.getInstanciaDisciplina.getRazao()</p>
+	            				}
+	            				@if(dica.getTipo().equals("DicaMaterial")){
+	            					<p>Link para material útil:</p><a href="@dica.getTexto()">@dica.getTexto()</a>
+	            				}
+	            				@if(dica.getTipo().equals("DicaConselho")){
+	            					<p>Conselho:</p><p class="normal-font">@dica.getTexto()</p>
+	            				}
+	            				@if(dica.getTipo().equals("DicaAssunto")){
+	            					<p>Assuntos importantes:</p><p class="normal-font">@dica.getTexto()</p>
+	            				}
+		       				</div>
+		       				<hr class="uk-article-divider">
+	       				}
+		         	}
+       				@for(metadica <- disciplinaAtual.getMetaDicas()){
+       					<div class="uk-panel uk-panel-box dica" style="background-color: #34363f;">
+							<input class="uk-form-control uk-panel-badge" type="checkbox" name="metadica" value="@metadica.getId()">
+							<p>Comentário: </p><p class="normal-font">@metadica.getComment()</p>
+						</div>
+	       				<hr class="uk-article-divider">
+       				}
+       				</div>
+	         	<div class="uk-modal-footer uk-text-right" style="background-color:#5f5f5f">
+					<button class="uk-button uk-button-primary" type="submit" ng-disabled="!comentario">Indicar</button>
+				</div>
+	         	</form>
+			</div>
+		</div>
     </body>
 </html>

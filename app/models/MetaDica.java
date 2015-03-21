@@ -15,9 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-@Entity(name="MetaDica")
+@Entity
 public class MetaDica implements Comparable<MetaDica>{
 	@Id
 	@GeneratedValue
@@ -65,6 +64,11 @@ public class MetaDica implements Comparable<MetaDica>{
 		this.disciplina = disciplina;
 		this.user = user;
 		this.comment = comment;
+		this.dicasAdicionadas = new ArrayList<Dica>();
+		this.metaDicasAdicionadas = new ArrayList<MetaDica>();
+		this.usuarioqueQueJaDenunciaram = new ArrayList<String>();
+		this.usuariosQueJaVotaram = new ArrayList<String>();
+		this.usersCommentaries = new HashMap<String, String>();
 	}
 
 	public String getUser() {
@@ -179,6 +183,12 @@ public class MetaDica implements Comparable<MetaDica>{
 	}
 
 	public List<Dica> getDicasAdicionadas() {
+		Collections.sort(dicasAdicionadas);
+		
+		for (Dica dica : dicasAdicionadas) {
+			dica.checaTipoDica();
+		}
+		
 		return dicasAdicionadas;
 	}
 
@@ -187,6 +197,7 @@ public class MetaDica implements Comparable<MetaDica>{
 	}
 
 	public List<MetaDica> getMetaDicasAdicionadas() {
+		Collections.sort(metaDicasAdicionadas);
 		return metaDicasAdicionadas;
 	}
 

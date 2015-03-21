@@ -25,6 +25,7 @@ import play.Logger;
 public class Tema {
 	@Id
 	@GeneratedValue
+	@Column
 	private long id;
 		
 	@Column

@@ -30,6 +30,7 @@
 				</div>
     		</div>
             <div class="uk-grid" data-uk-grid-margin>
+            	<!-- ---------------- MENU ---------------- -->
             	<div class="uk-width-medium-1-4">
             		<div class="uk-panel uk-panel-box">
             			<div class="uk-panel-header">
@@ -51,6 +52,7 @@
             			</ul>
             		</div>
             	</div>
+            	<!-- ---------------- MAIN CONTENT ---------------- -->
             	<div class="uk-width-medium-3-4">
             		<div class="uk-panel uk-panel-box">
             			<div class="uk-article">
@@ -77,6 +79,9 @@
             				<hr class="uk-article-divider-orange">
             			</div>
             			<div id="dicasList">
+            				@if(temaAtual.getDicas().isEmpty()){
+								<p>Este tema ainda não possui nenhuma dica.</p>
+							}
 	            			@for(dica <- temaAtual.getDicas()){
 	            			<div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
 	            				@if(!dica.wasFlaggedByUser(session.get("login"))){
@@ -130,6 +135,10 @@
 									<div class="uk-modal-dialog">
 										<a class="uk-modal-close uk-close"></a>
 										<div class="uk-modal-header" style="background-color:#5f5f5f"><h2>Discordâncias</h2></div>
+										<div class="uk-overflow-container">
+										@if(dica.getUsersCommentaries().entrySet().isEmpty()){
+											<p>Nenhuma discordância adicionada.</p>
+										}
 										@for(discordancia <- dica.getUsersCommentaries().entrySet()){
 		            						<div class="uk-panel uk-panel-box dica">
 				            					<p class="normal-font">@discordancia.getValue()</p>
@@ -137,6 +146,7 @@
 				            				</div>
 				            				<hr class="uk-article-divider">
 				            			}
+				            			</div>
 				            		</div>
 				            	</div>
 				            	---------------- MODAL ADD DISCORDÂNCIA ----------------

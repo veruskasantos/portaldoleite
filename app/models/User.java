@@ -14,6 +14,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column
 	private Long id;
 
 	@Column

@@ -26,6 +26,7 @@ import javax.persistence.Transient;
 public abstract class Dica implements Comparable<Dica>{
 	@Id
 	@GeneratedValue
+	@Column
 	private long id;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
@@ -75,10 +76,6 @@ public abstract class Dica implements Comparable<Dica>{
 
 	public Map<String, String> getUsersCommentaries() {
 		return usersCommentaries;
-	}
-	
-	public Entry<String,String> getDiscordanciasSet(){
-		return (Entry<String, String>) usersCommentaries.entrySet();
 	}
 	
 	public void addUserCommentary(String login, String commentary) {
