@@ -40,10 +40,10 @@ public class Tema {
 	@ElementCollection
     @MapKeyColumn(name="user")
     @Column(name="dificuldade")
-    @CollectionTable(name="USERS_DIFF", joinColumns=@JoinColumn(name="tema_id"))
+    @CollectionTable(name="users_diff", joinColumns=@JoinColumn(name="tema_id"))
 	private Map<String, String> usersDifficulty;
 	
-	@Column(name = "TOTAL_DIFF")
+	@Column(name = "total_diff")
 	private int dificuldade;
 	
 	public Tema(){}

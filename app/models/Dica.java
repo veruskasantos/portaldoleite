@@ -35,7 +35,7 @@ public abstract class Dica implements Comparable<Dica>{
 	@ElementCollection
     @MapKeyColumn(name="user")
     @Column(name="commentary")
-    @CollectionTable(name="USERS_COMM", joinColumns=@JoinColumn(name="dica_id"))
+    @CollectionTable(name="users_comm", joinColumns=@JoinColumn(name="dica_id"))
 	private Map<String, String> usersCommentaries;
 	
 	@ElementCollection
