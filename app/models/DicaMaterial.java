@@ -25,12 +25,12 @@ public class DicaMaterial extends Dica{
 		this.url = url;
 	}
 
-	//@Override
+	@Override
 	public String getTexto() {
 		return getUrl();
 	}
 	
-	//@Override
+	@Override
 	public String getTipo() {
 		return "DicaMaterial";
 	}

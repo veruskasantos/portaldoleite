@@ -25,12 +25,12 @@ public class DicaConselho extends Dica{
 		this.conselho = conselho;
 	}
 
-	//@Override
+	@Override
 	public String getTexto() {
 		return getConselho();
 	}
 	
-	//@Override
+	@Override
 	public String getTipo() {
 		return "DicaConselho";
 	}

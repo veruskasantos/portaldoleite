@@ -37,12 +37,12 @@ public class DicaDisciplina extends Dica{
 		this.razao = razao;
 	}
 
-	//@Override
+	@Override
 	public String getTexto() {
 		return this.nomeDisciplina;
 	}
 	
-	//@Override
+	@Override
 	public String getTipo() {
 		return "DicaDisciplina";
 	}

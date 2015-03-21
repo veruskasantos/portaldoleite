@@ -25,12 +25,12 @@ public class DicaAssunto extends Dica{
 		this.assunto = assunto;
 	}
 
-	//@Override
+	@Override
 	public String getTexto() {
 		return getAssunto();
 	}
 
-	//@Override
+	@Override
 	public String getTipo() {
 		return "DicaAssunto";
 	}
