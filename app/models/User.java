@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.mindrot.jbcrypt.BCrypt;
 
 @Table(name="user_table")
-@Entity(name="user_table")
+@Entity(name="User")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
