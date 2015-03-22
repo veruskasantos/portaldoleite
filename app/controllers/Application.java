@@ -13,7 +13,6 @@ import models.Disciplina;
 import models.MetaDica;
 import models.Tema;
 import models.dao.GenericDAOImpl;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -271,9 +270,8 @@ public class Application extends Controller {
 			Map<String,String[]> map = request().body().asFormUrlEncoded();
 			
 			String[] checkedDicas = map.get("dica");
-			Logger.debug("Array dicas: " + Arrays.toString(checkedDicas));
 			String[] checkedMetaDicas = map.get("metadica");
-			Logger.debug("Array meta: " + Arrays.toString(checkedMetaDicas));
+			
 			
 			if(checkedDicas == null && checkedMetaDicas == null){
 				return disciplinaErro(disciplina);
@@ -289,6 +287,8 @@ public class Application extends Controller {
 
 					if(checkedDica != null){
 						metaDica.addDica(checkedDica);
+						checkedDica.addMetaDica(metaDica);
+						dao.merge(checkedDica);
 					}
 				}
 			}
@@ -302,6 +302,7 @@ public class Application extends Controller {
 
 					if(checkedMetaDica != null){
 						metaDica.addMetaDica(checkedMetaDica);
+						dao.merge(checkedMetaDica);
 					}
 				}
 			}
@@ -311,7 +312,6 @@ public class Application extends Controller {
 			dao.persist(metaDica);
 			dao.merge(disciplina);
 			dao.flush();
-			Logger.debug("Salvou metadica " + metaDica.getId());
 			
 			return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
 		}
@@ -338,10 +338,13 @@ public class Application extends Controller {
 			
 			if (dica.getFlag()==3) {
 				dao.removeById(Dica.class, idDica);
-				dao.merge(tema);
+				
+				for (MetaDica metadica : dica.getMetaDicas()) {
+					metadica.getDicasAdicionadas().remove(dica);
+					dao.merge(metadica);
+				}
 			} else {
 				dao.merge(dica);
-				//dao.merge(tema);
 			}
 		} else {
 			flash("fail", "Usuário já denunciou a dica.");
@@ -364,7 +367,6 @@ public class Application extends Controller {
 	@Transactional
 	public static Result denunciarMetaDica(Long idMetaDica) {
 		MetaDica metaDica = dao.findByEntityId(MetaDica.class, idMetaDica);
-		Disciplina disciplina = metaDica.getDisciplina();
 		
 		String login = session("login");
 		if (!metaDica.wasFlaggedByUser(login)) {
@@ -372,11 +374,9 @@ public class Application extends Controller {
 			metaDica.incrementaFlag();
 			
 			if (metaDica.getFlag()==3) {
-				dao.removeById(Dica.class, idMetaDica);
-				dao.merge(disciplina);
+				dao.removeById(MetaDica.class, idMetaDica);
 			} else {
 				dao.merge(metaDica);
-				//dao.merge(tema);
 			}
 		} else {
 			flash("fail", "Usuário já denunciou a dica.");

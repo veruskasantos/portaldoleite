@@ -3,18 +3,15 @@ package models;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
@@ -28,7 +25,7 @@ public abstract class Dica implements Comparable<Dica>{
 	@Column
 	private long id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private Tema tema;
 	
 	@Column
@@ -42,6 +39,9 @@ public abstract class Dica implements Comparable<Dica>{
 	
 	@ElementCollection
 	private List<String> usuariosQueJaVotaram;
+	
+	@ManyToMany(mappedBy="dicasAdicionadas")
+	private List<MetaDica> metadicas;
 	
 	@Column
 	private int concordancias;
@@ -170,6 +170,14 @@ public abstract class Dica implements Comparable<Dica>{
 	
 	public boolean wasFlaggedByUser(String user) {
 		return usuarioqueQueJaDenunciaram.contains(user);
+	}
+	
+	public void addMetaDica(MetaDica metadica) {
+		this.metadicas.add(metadica);
+	}
+	
+	public List<MetaDica> getMetaDicas() {
+		return this.metadicas;
 	}
 
 	public abstract String getTipo();

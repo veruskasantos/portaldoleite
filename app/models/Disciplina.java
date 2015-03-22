@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,7 +28,7 @@ public class Disciplina {
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Tema> temas;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="disciplina", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private List<MetaDica> metaDicas;
 	
 	public Disciplina() {
