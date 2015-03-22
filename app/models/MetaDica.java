@@ -17,15 +17,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.Table;
 
-@Entity
+@Table(name="metadica")
+@Entity(name="MetaDica")
 public class MetaDica implements Comparable<MetaDica>{
 	@Id
 	@GeneratedValue
 	private Long id;
 	
 	@Column
-	private String user;
+	private String username;
 	
 	@Column
 	private String comment;
@@ -64,7 +66,7 @@ public class MetaDica implements Comparable<MetaDica>{
 	
 	public MetaDica(Disciplina disciplina, String user, String comment) {
 		this.disciplina = disciplina;
-		this.user = user;
+		this.username = user;
 		this.comment = comment;
 		this.dicasAdicionadas = new ArrayList<Dica>();
 		this.metaDicasAdicionadas = new ArrayList<MetaDica>();
@@ -74,11 +76,11 @@ public class MetaDica implements Comparable<MetaDica>{
 	}
 
 	public String getUser() {
-		return user;
+		return username;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.username = user;
 	}
 
 	public String getComment() {

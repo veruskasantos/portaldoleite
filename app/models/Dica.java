@@ -20,6 +20,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+@Table(name="dica")
 @Entity(name="Dica")
 public abstract class Dica implements Comparable<Dica>{
 	@Id
@@ -31,7 +32,7 @@ public abstract class Dica implements Comparable<Dica>{
 	private Tema tema;
 	
 	@Column
-	private String user;
+	private String username;
 	
 	@ElementCollection
     @MapKeyColumn(name="user_dica")
@@ -123,11 +124,11 @@ public abstract class Dica implements Comparable<Dica>{
 	}
 
 	public String getUser() {
-		return user;
+		return username;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.username = user;
 	}
 	
 	public void addUsuarioQueVotou(String user){
