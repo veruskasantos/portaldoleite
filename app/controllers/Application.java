@@ -67,12 +67,10 @@ public class Application extends Controller {
 		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
 		MetaDica metadica = dao.findByEntityId(MetaDica.class, id);
 		Disciplina disciplina = metadica.getDisciplina();
-		if(disciplina == null){
+		if(disciplina == null || metadica == null){
 			return erro();
 		}
-		if(metadica == null){
-			return erro();
-		}
+		
 		return ok(views.html.metadica.render(listaDisciplina, disciplina, metadica));
 	}
 	
@@ -151,6 +149,7 @@ public class Application extends Controller {
 	}
 	
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result avaliarDificuldadeTema(long idTema) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
 		if (filledForm.hasErrors()) {
@@ -170,6 +169,7 @@ public class Application extends Controller {
 	}
 	
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result addDiscordanciaEmDica(long idDica) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
 		
@@ -194,6 +194,7 @@ public class Application extends Controller {
 	}
 	
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result upVoteDica(long idDica) {
 		Dica dica = dao.findByEntityId(Dica.class, idDica);
 		String login = session("login");
@@ -208,6 +209,7 @@ public class Application extends Controller {
 	}
 
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result addDiscordanciaEmMetaDica(long idMetaDica) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
 		
@@ -232,6 +234,7 @@ public class Application extends Controller {
 	}
 	
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result upVoteMetaDica(long idMetaDica) {
 		MetaDica metaDica = dao.findByEntityId(MetaDica.class, idMetaDica);
 		String login = session("login");
@@ -254,6 +257,7 @@ public class Application extends Controller {
 	 *           tenha sido concluído com sucesso.
 	 */
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result cadastrarMetaDica(long idDisciplina) {
 		DynamicForm filledForm = Form.form().bindFromRequest();
 		
@@ -329,9 +333,9 @@ public class Application extends Controller {
 	 *           tenha sido concluído com sucesso.
 	 */
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result denunciarDica(Long idDica) {
 		Dica dica = dao.findByEntityId(Dica.class, idDica);
-		Tema tema = dica.getTema();
 		
 		String login = session("login");
 		if (!dica.wasFlaggedByUser(login)) {
@@ -367,6 +371,7 @@ public class Application extends Controller {
 	 *           tenha sido concluído com sucesso.
 	 */
 	@Transactional
+	@Security.Authenticated(Secured.class)
 	public static Result denunciarMetaDica(Long idMetaDica) {
 		MetaDica metaDica = dao.findByEntityId(MetaDica.class, idMetaDica);
 		
