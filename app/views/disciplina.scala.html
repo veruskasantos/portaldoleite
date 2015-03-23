@@ -92,7 +92,7 @@
 		            				</div>
 		            				<div class="uk-width-small-1-3">
 		            					<span class="normal-font">Avalie:</span>
-		            					@if(!metadica.wasVotedByUser(session.get("login"))){
+		            					@if(!metadica.wasVotedByUser(session.get("login")) && !metadica.isUnvotable()){
 		            						<form name="formUpVote@metadica.getId()" method="post" action="/upVoteMetaDica/@metadica.getId()"></form>
 			            					<a class="uk-icon-hover uk-icon-thumbs-up uk-text-success" href="javascript:DoPost(@metadica.getId())"></a>
 			            					<a class="uk-icon-hover uk-icon-thumbs-down uk-text-success" 

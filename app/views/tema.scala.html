@@ -111,7 +111,7 @@
 		            				</div>
 		            				<div class="uk-width-small-1-3">
 		            					<span class="normal-font">Avalie:</span>
-		            					@if(!dica.wasVotedByUser(session.get("login"))){
+		            					@if(!dica.wasVotedByUser(session.get("login")) && !dica.isUnvotable()){
 		            						<form name="formUpVote@dica.getId()" method="post" action="/upVoteDica/@dica.getId()"></form>
 			            					<a class="uk-icon-hover uk-icon-thumbs-up uk-text-success" href="javascript:DoPost(@dica.getId())"></a>
 			            					<a class="uk-icon-hover uk-icon-thumbs-down uk-text-success" 

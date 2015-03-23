@@ -179,6 +179,10 @@ public abstract class Dica implements Comparable<Dica>{
 	public List<MetaDica> getMetaDicas() {
 		return this.metadicas;
 	}
+	
+	public boolean isUnvotable() {
+		return this.concordancias>=20 || this.discordancias>=20;
+	}
 
 	public abstract String getTipo();
 }

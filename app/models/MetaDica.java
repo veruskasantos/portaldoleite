@@ -238,4 +238,8 @@ public class MetaDica implements Comparable<MetaDica>{
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
 	}
+	
+	public boolean isUnvotable() {
+		return this.concordancias>=20 || this.discordancias>=20;
+	}
 }
