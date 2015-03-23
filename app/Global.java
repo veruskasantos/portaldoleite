@@ -13,7 +13,7 @@ import play.db.jpa.JPA;
 public class Global extends GlobalSettings {
 
 	private static GenericDAOImpl dao = new GenericDAOImpl();
-	List<Disciplina> disciplinas = new ArrayList<>();
+	private List<Disciplina> disciplinas = new ArrayList<>();
 	
 	@Override
 	public void onStart(Application app) {
