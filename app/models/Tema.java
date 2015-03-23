@@ -18,9 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import play.Logger;
 
 @Entity(name="Tema")
 public class Tema {
@@ -73,6 +70,14 @@ public class Tema {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 
 	public int getDificuldade() {

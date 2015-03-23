@@ -21,6 +21,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 public class Application extends Controller {
+	private static final int MAX_DENUNCIAS = 3;
 	private static GenericDAOImpl dao = new GenericDAOImpl();
 	
 	@Transactional
@@ -336,7 +337,7 @@ public class Application extends Controller {
 			dica.addUsuarioFlag(login);
 			dica.incrementaFlag();
 			
-			if (dica.getFlag()==3) {
+			if (dica.getFlag() == MAX_DENUNCIAS) {
 				dao.removeById(Dica.class, idDica);
 				
 				for (MetaDica metadica : dica.getMetaDicas()) {
@@ -373,7 +374,7 @@ public class Application extends Controller {
 			metaDica.addUsuarioFlag(login);
 			metaDica.incrementaFlag();
 			
-			if (metaDica.getFlag()==3) {
+			if (metaDica.getFlag() == MAX_DENUNCIAS) {
 				dao.removeById(MetaDica.class, idMetaDica);
 			} else {
 				dao.merge(metaDica);

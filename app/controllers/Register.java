@@ -1,13 +1,10 @@
 package controllers;
 
-import static play.data.Form.form;
-
 import java.util.List;
 
 import models.User;
 import models.dao.GenericDAO;
 import models.dao.GenericDAOImpl;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;

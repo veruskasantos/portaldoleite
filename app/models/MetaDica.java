@@ -34,10 +34,10 @@ public class MetaDica implements Comparable<MetaDica>{
 	private String comment;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	List<Dica> dicasAdicionadas;
+	private List<Dica> dicasAdicionadas;
 	
 	@ManyToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
-	List<MetaDica> metaDicasAdicionadas;
+	private List<MetaDica> metaDicasAdicionadas;
 	
 	@ElementCollection
 	private List<String> usuariosQueJaVotaram;
