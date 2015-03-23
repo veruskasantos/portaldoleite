@@ -13,6 +13,7 @@ import models.Disciplina;
 import models.MetaDica;
 import models.Tema;
 import models.dao.GenericDAOImpl;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
