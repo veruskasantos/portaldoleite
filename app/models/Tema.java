@@ -147,12 +147,4 @@ public class Tema {
 		
 		return String.format("%.2f", votesCount/totalVotes);
 	}
-
-	public Disciplina getDisciplina() {
-		return disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
 }
