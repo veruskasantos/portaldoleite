@@ -58,6 +58,42 @@ public class Global extends GlobalSettings {
 		si1.addTema(new Tema("Minitestes"));
 		si1.addTema(new Tema("Projeto"));
 		dao.persist(si1);
+
+                Disciplina eda = new Disciplina("Estrutura de dados e algoritimos");
+                eda.addTema(new Tema("Análise de Algoritmos Iterativos"));
+                eda.addTema(new Tema("Análise de Algoritmos Recursivos"));
+		eda.addTema(new Tema("TAD (vetor, pilha e fila)"));
+		eda.addTema(new Tema("Listas Encadeadas (iterativo)"));
+		eda.addTema(new Tema("Listas Encadeadas (recursivo)"));
+		eda.addTema(new Tema("Árvore Binária de Pesquisa (BST)"));
+		eda.addTema(new Tema("Tabelas Hash"));
+                eda.addTema(new Tema("Heaps"));
+		eda.addTema(new Tema("SkipList"));
+		eda.addTema(new Tema("Árvores AVL"));
+		eda.addTema(new Tema("Árvores PV"));
+		eda.addTema(new Tema("Árvores Splay"));
+		eda.addTema(new Tema("Árvores B"));
+		dao.persist(eda);
+                
+
+                Disciplina programacao2 = new Disciplina("Programação 2");
+                programacao2.addTema(new Tema("Recursividade"));
+                programacao2.addTema(new Tema("Coleções em java"));
+		programacao2.addTema(new Tema("Refatoramento e regras de design"));
+		programacao2.addTema(new Tema("Salvando dados em arquivos"));
+		programacao2.addTema(new Tema("Interfaces e polimorfismo"));
+		programacao2.addTema(new Tema("Herança e polimorfismo"));
+		programacao2.addTema(new Tema("Tratamento de exceções e enumerações"));
+                programacao2.addTema(new Tema("Reuso, Composição e herança"));
+		programacao2.addTema(new Tema("Teste de unidade"));
+		programacao2.addTema(new Tema("Criação de classes e objetos"));
+		programacao2.addTema(new Tema("INtrodução a java"));
+		programacao2.addTema(new Tema("Labroratórios"));
+		programacao2.addTema(new Tema("Projeto"));
+		dao.persist(programacao2);
+
+
+
 		dao.flush();
 	}
 }
