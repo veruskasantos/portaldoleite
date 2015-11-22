@@ -5,6 +5,7 @@ import models.Dica;
 import models.DicaAssunto;
 import models.DicaConselho;
 import models.DicaDisciplina;
+import models.DicaMaterial;
 import models.Disciplina;
 import models.Tema;
 import models.User;
@@ -20,8 +21,10 @@ public class Global extends GlobalSettings {
 
 	private static GenericDAOImpl dao = new GenericDAOImpl();
 	private List<Disciplina> disciplinas = new ArrayList<>();
-	private User user1;
-	private Tema projeto, OO, lab, minitestes, javaScript;
+	private User user1, user2, user3, user4;
+	private Tema projeto, OO, lab, minitestes, javaScript, logicaProposicional;
+	private Dica dicaConselho, dicaDisciplina, dicaConselhoOutro, dicaConselho3, 
+	dicaAssunto, dicaMaterial;
 	
 	@Override
 	public void onStart(Application app) {
@@ -35,6 +38,7 @@ public class Global extends GlobalSettings {
 				}
 				cadastraUsuarios();
 				cadastraDicas();
+				cadastraVotos();
 			}
 		});
 	}
@@ -74,15 +78,15 @@ public class Global extends GlobalSettings {
 		si1.addTema(projeto);
 		dao.persist(si1);
 
-                Disciplina eda = new Disciplina("Estrutura de dados e algoritimos");
-                eda.addTema(new Tema("Análise de Algoritmos Iterativos"));
-                eda.addTema(new Tema("Análise de Algoritmos Recursivos"));
+        Disciplina eda = new Disciplina("Estrutura de dados e algoritimos");
+        eda.addTema(new Tema("Análise de Algoritmos Iterativos"));
+        eda.addTema(new Tema("Análise de Algoritmos Recursivos"));
 		eda.addTema(new Tema("TAD (vetor, pilha e fila)"));
 		eda.addTema(new Tema("Listas Encadeadas (iterativo)"));
 		eda.addTema(new Tema("Listas Encadeadas (recursivo)"));
 		eda.addTema(new Tema("Árvore Binária de Pesquisa (BST)"));
 		eda.addTema(new Tema("Tabelas Hash"));
-                eda.addTema(new Tema("Heaps"));
+        eda.addTema(new Tema("Heaps"));
 		eda.addTema(new Tema("SkipList"));
 		eda.addTema(new Tema("Árvores AVL"));
 		eda.addTema(new Tema("Árvores PV"));
@@ -91,9 +95,9 @@ public class Global extends GlobalSettings {
 		dao.persist(eda);
                 
 
-                Disciplina programacao2 = new Disciplina("Programação 2");
-                programacao2.addTema(new Tema("Recursividade"));
-                programacao2.addTema(new Tema("Coleções em java"));
+        Disciplina programacao2 = new Disciplina("Programação 2");
+        programacao2.addTema(new Tema("Recursividade"));
+        programacao2.addTema(new Tema("Coleções em java"));
 		programacao2.addTema(new Tema("Refatoramento e regras de design"));
 		programacao2.addTema(new Tema("Salvando dados em arquivos"));
 		programacao2.addTema(new Tema("Interfaces e polimorfismo"));
@@ -108,7 +112,21 @@ public class Global extends GlobalSettings {
 		programacao2.addTema(new Tema("Projeto"));
 		dao.persist(programacao2);
 
-
+		Disciplina logicaMatematica = new Disciplina("Lógica Matemática");
+		logicaProposicional = new Tema ("Lógica Proposicional");
+		logicaMatematica.addTema(logicaProposicional);
+		logicaMatematica.addTema(new Tema("Tableaux Semântico"));
+		logicaMatematica.addTema(new Tema("CNF"));
+		logicaMatematica.addTema(new Tema("Sat Solver"));
+		logicaMatematica.addTema(new Tema("Semântica na Lógica Proposicional"));
+		logicaMatematica.addTema(new Tema("Dedução na Lógica Proposicional"));
+		logicaMatematica.addTema(new Tema("Lógica de Predicados"));
+		logicaMatematica.addTema(new Tema("Semântica na Lógica de Predicados"));
+		logicaMatematica.addTema(new Tema("Dedução na Lógica de Predicados"));
+		logicaMatematica.addTema(new Tema("Lógica Temporal"));
+		logicaMatematica.addTema(new Tema("Model Checker"));
+		logicaMatematica.addTema(new Tema("Projeto"));
+        dao.persist(logicaMatematica);
 
 		dao.flush();
 	}
@@ -120,15 +138,15 @@ public class Global extends GlobalSettings {
 		user1.setNome("User1");
 		dao.persist(user1);
 		
-		User user2 = new User("user2@hot.com", "123", "user2");
+		user2 = new User("user2@hot.com", "123", "user2");
 		user2.setNome("User2");
 		dao.persist(user2);
 		
-		User user3 = new User("user3@hot.com", "123", "user3");
+		user3 = new User("user3@hot.com", "123", "user3");
 		user3.setNome("User3");
 		dao.persist(user3);
 		
-		User user4 = new User("user4@hot.com", "123", "user4");
+		user4 = new User("user4@hot.com", "123", "user4");
 		user4.setNome("User4");
 		dao.persist(user4);
 		
@@ -160,7 +178,7 @@ public class Global extends GlobalSettings {
 	
 	private void cadastraDicas(){
 		
-		Dica dicaConselho = new DicaConselho("Fazer todos os minitestes é uma "
+		dicaConselho = new DicaConselho("Fazer todos os minitestes é uma "
 				+ "excelente forma de praticar os assuntos e conhecer as ferramentas");
 		dicaConselho.setUser(user1.getNome());
 		dicaConselho.setTema(projeto);
@@ -169,7 +187,7 @@ public class Global extends GlobalSettings {
 		dao.persist(projeto);
 		
 		
-		Dica dicaDisciplina = new DicaDisciplina("Programação II", "Nesta disiciplina"
+		dicaDisciplina = new DicaDisciplina("Programação II", "Nesta disiciplina"
 				+ " aprende-se o que é OO e pratica-se a mesma através da "
 				+ "programação em Java.");
 		dicaDisciplina.setUser(user1.getNome());
@@ -179,7 +197,7 @@ public class Global extends GlobalSettings {
 		dao.persist(OO);
 		
 		
-		Dica dicaConselhoOutro = new DicaConselho("Fazer todos os laboratórios "
+		dicaConselhoOutro = new DicaConselho("Fazer todos os laboratórios "
 				+ "garante uma boa experiência para desenvolver o projeto mais "
 				+ "tranquilo.");
 		dicaConselhoOutro.setUser(user1.getNome());
@@ -189,7 +207,7 @@ public class Global extends GlobalSettings {
 		dao.persist(lab);
 		
 		
-		Dica dicaConselho3 = new DicaConselho("Responder os leites de períodos "
+		dicaConselho3 = new DicaConselho("Responder os leites de períodos "
 				+ "anteriores é uma boa forma de praticar os assuntos teóricos "
 				+ "e a programação no papel.");
 		dicaConselho3.setUser(user1.getNome());
@@ -199,7 +217,7 @@ public class Global extends GlobalSettings {
 		dao.persist(minitestes);
 		
 		
-		Dica dicaAssunto = new DicaAssunto("Saber programar em Java facilita "
+		dicaAssunto = new DicaAssunto("Saber programar em Java facilita "
 				+ "rapidamente a compreensão da linguagem JavaScript");
 		dicaAssunto.setUser(user1.getNome());
 		dicaAssunto.setTema(javaScript);
@@ -207,8 +225,61 @@ public class Global extends GlobalSettings {
 		dao.persist(dicaAssunto);
 		dao.persist(javaScript);
 		
+		dicaMaterial = new DicaMaterial("https://www.google.com.br/"
+				+ "url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved="
+				+ "0ahUKEwjMxceHzaLJAhXMmpAKHaCKB_gQFggkMAI&url=https%3A%2F%2Fpt."
+				+ "wikipedia.org%2Fwiki%2FL%25C3%25B3gica_matem%25C3%25A1tica&usg="
+				+ "AFQjCNHZFO7AY7tcmwdt6HsePdjUKHbmFw");
+		dicaMaterial.setUser(user1.getNome());
+		dicaMaterial.setTema(logicaProposicional);
+		logicaProposicional.addDica(dicaMaterial);
+		dao.persist(dicaMaterial);
+		dao.persist(logicaProposicional);
+		
 	}
 	
-	// falta cadastrar 10 votos
+	private void cadastraVotos(){
+		
+		dicaConselho.incrementaConcordancias();
+		dicaConselho.addUsuarioQueVotou(user2.getNome());
+		
+		dicaConselho.incrementaConcordancias();
+		dicaConselho.addUsuarioQueVotou(user3.getNome());
+		
+		dicaConselho.incrementaDiscordancias();
+		dicaConselho.addUserCommentary(user4.getLogin(), "Discordo. "
+				+ "Os minitestes focam mais nos padrões que nas ferramentas "
+				+ "propriamente ditas.");
+		dicaConselho.addUsuarioQueVotou(user4.getNome());
+		dao.persist(dicaConselho);
+		
+		dicaDisciplina.incrementaDiscordancias();
+		dicaDisciplina.addUserCommentary(user2.getLogin(), "Minha opinião: "
+				+ "Esperem para pagar com Gustavo.");
+		
+		dicaDisciplina.incrementaDiscordancias();
+		dicaDisciplina.addUserCommentary(user3.getLogin(), "Quem dera leda fosse "
+				+ "p2...");
+		dao.persist(dicaDisciplina);
+		
+		dicaAssunto.incrementaConcordancias();
+		dicaAssunto.addUsuarioQueVotou(user2.getNome());
+		
+		dicaAssunto.incrementaConcordancias();
+		dicaAssunto.addUsuarioQueVotou(user3.getNome());
+		
+		dicaAssunto.incrementaConcordancias();
+		dicaAssunto.addUsuarioQueVotou(user4.getNome());
+		dao.persist(dicaAssunto);
+		
+		dicaMaterial.incrementaConcordancias();
+		dicaMaterial.addUsuarioQueVotou(user2.getNome());
+		
+		dicaMaterial.incrementaDiscordancias();
+		dicaMaterial.addUserCommentary(user3.getLogin(), "Já eu, prefiro os slides "
+				+ "do professor.");
+		dicaMaterial.addUsuarioQueVotou(user3.getNome());
+
+	}
 	
 }
