@@ -31,7 +31,7 @@ public class Application extends Controller {
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		List<Dica> ultimasDicas = dao.findAllByClassName(Dica.class.getName());
-		DicaSort(ultimasDicas);
+		DicaSortData(ultimasDicas);
 		return ok(views.html.index.render(disciplinas, RetornaDezUltimas(ultimasDicas)));
     }
 	private static List<Dica> RetornaDezUltimas(List<Dica> ultimasDicas){
@@ -46,7 +46,37 @@ public class Application extends Controller {
 		}
 		return dezultimasDicas;
 	}
-	private static void DicaSort(List<Dica> ultimasDicas){	
+	private static void DicaSortDiscordancia(List<Dica> ultimasDicas){
+		boolean houveTroca = true;
+		Dica temp;
+		while(houveTroca){
+			houveTroca = false;
+			for(int i = 0; i < ultimasDicas.size() -1; i++){
+				if(ultimasDicas.get(i).getDiscordancias() > (ultimasDicas.get(i+1).getDiscordancias())){
+					temp = ultimasDicas.get(i);
+					ultimasDicas.set(i,ultimasDicas.get(i+1) );
+					ultimasDicas.set(i+1, temp);
+					houveTroca = true;
+				}
+			}
+		}
+	}
+	private static void DicaSortConcordancia(List<Dica> ultimasDicas){
+		boolean houveTroca = true;
+		Dica temp;
+		while(houveTroca){
+			houveTroca = false;
+			for(int i = 0; i < ultimasDicas.size() -1; i++){
+				if(ultimasDicas.get(i).getConcordancias() > (ultimasDicas.get(i+1).getConcordancias())){
+					temp = ultimasDicas.get(i);
+					ultimasDicas.set(i,ultimasDicas.get(i+1) );
+					ultimasDicas.set(i+1, temp);
+					houveTroca = true;
+				}
+			}
+		}
+	}
+	private static void DicaSortData(List<Dica> ultimasDicas){	
 		boolean houveTroca = true;
 		Dica temp;
 		while(houveTroca){
