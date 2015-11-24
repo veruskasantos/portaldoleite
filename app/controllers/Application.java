@@ -30,9 +30,23 @@ public class Application extends Controller {
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		List<Dica> ultimasDicas = dao.findAllByClassName(Dica.class.getName());
+		DicaSort(ultimasDicas);
 		return ok(views.html.index.render(disciplinas, ultimasDicas));
     }
-	
+	private static void DicaSort(List<Dica> ultimasDicas){
+		
+		for(int i = 0; i< ultimasDicas.size(); i++){ 
+			for(int j = 0; j< ultimasDicas.size() -1; j++){ 
+				if(ultimasDicas.get(j).getData().compareTo(ultimasDicas.get(j+1).getData()) > 0){ 
+					Dica aux = ultimasDicas.get(j);
+					ultimasDicas.set(j, ultimasDicas.get(j+1));
+				    ultimasDicas.set(i+1, aux);
+					} 
+				} 
+			}
+
+		
+	}
 	@Transactional
 	@Security.Authenticated(Secured.class)
 	public static Result tema(long id) {
