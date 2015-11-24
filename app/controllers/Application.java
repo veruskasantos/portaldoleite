@@ -31,6 +31,7 @@ public class Application extends Controller {
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		List<Dica> ultimasDicas = dao.findAllByClassName(Dica.class.getName());
+		DicaSort(ultimasDicas);
 		return ok(views.html.index.render(disciplinas, RetornaDezUltimas(ultimasDicas)));
     }
 	private static List<Dica> RetornaDezUltimas(List<Dica> ultimasDicas){
