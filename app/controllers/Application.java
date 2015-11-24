@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +32,15 @@ public class Application extends Controller {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		List<Dica> ultimasDicas = dao.findAllByClassName(Dica.class.getName());
 		DicaSort(ultimasDicas);
-		return ok(views.html.index.render(disciplinas, ultimasDicas));
+		return ok(views.html.index.render(disciplinas, RetornaDezUltimas(ultimasdicas)));
     }
+	private static List<Dica> RetornaDezUltimas(List<Dica> ultimasDicas){
+		List<Dica> dezultimasDicas = new ArrayList();
+		for(int i=0; 1 < 10; i++){
+			dezultimasDicas.add(ultimasdicas.get(i))
+		}
+		return dezultimasDicas;
+	}
 	private static void DicaSort(List<Dica> ultimasDicas){
 		
 		for(int i = 0; i< ultimasDicas.size(); i++){ 
