@@ -73,7 +73,9 @@ public abstract class Dica implements Comparable<Dica>{
 	public Calendar getData() {
 		return data;
 	}
-
+   public void setData(int year, int month, int dayOfMonth, int hourOfDay, int minute){
+	   data.set(year, month, dayOfMonth, hourOfDay, minute);
+   }
 	public Tema getTema() {
 		return tema;
 	}
