@@ -182,6 +182,7 @@ public class Global extends GlobalSettings {
 				+ "excelente forma de praticar os assuntos e conhecer as ferramentas");
 		dicaConselho.setUser(user1.getNome());
 		dicaConselho.setTema(projeto);
+		dicaConselho.setData(2015,1, 10, 20, 30);
 		projeto.addDica(dicaConselho);
 		dao.persist(dicaConselho);
 		dao.persist(projeto);
@@ -192,6 +193,7 @@ public class Global extends GlobalSettings {
 				+ "programação em Java.");
 		dicaDisciplina.setUser(user1.getNome());
 		dicaDisciplina.setTema(OO);
+		dicaDisciplina.setData(2015,3, 10, 20, 30);
 		OO.addDica(dicaDisciplina);
 		dao.persist(dicaDisciplina);
 		dao.persist(OO);
@@ -202,6 +204,7 @@ public class Global extends GlobalSettings {
 				+ "tranquilo.");
 		dicaConselhoOutro.setUser(user1.getNome());
 		dicaConselhoOutro.setTema(lab);
+		dicaConselhoOutro.setData(2015,2, 10, 20, 30);
 		lab.addDica(dicaConselhoOutro);
 		dao.persist(dicaConselhoOutro);
 		dao.persist(lab);
@@ -212,6 +215,7 @@ public class Global extends GlobalSettings {
 				+ "e a programação no papel.");
 		dicaConselho3.setUser(user1.getNome());
 		dicaConselho3.setTema(minitestes);
+		dicaConselho3.setData(2015,5, 10, 20, 30);
 		minitestes.addDica(dicaConselho3);
 		dao.persist(dicaConselho3);
 		dao.persist(minitestes);
@@ -221,6 +225,7 @@ public class Global extends GlobalSettings {
 				+ "rapidamente a compreensão da linguagem JavaScript");
 		dicaAssunto.setUser(user1.getNome());
 		dicaAssunto.setTema(javaScript);
+		dicaAssunto.setData(2015,4, 10, 20, 30);
 		javaScript.addDica(dicaAssunto);
 		dao.persist(dicaAssunto);
 		dao.persist(javaScript);
@@ -232,6 +237,7 @@ public class Global extends GlobalSettings {
 				+ "AFQjCNHZFO7AY7tcmwdt6HsePdjUKHbmFw");
 		dicaMaterial.setUser(user1.getNome());
 		dicaMaterial.setTema(logicaProposicional);
+		dicaMaterial.setData(2015,6, 10, 20, 30);
 		logicaProposicional.addDica(dicaMaterial);
 		dao.persist(dicaMaterial);
 		dao.persist(logicaProposicional);
