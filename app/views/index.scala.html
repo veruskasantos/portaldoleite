@@ -1,4 +1,4 @@
-@(disciplinas: List[Disciplina])
+@(disciplinas: List[Disciplina], dicas: List[Dica])
 
 <!DOCTYPE html>
 
@@ -56,6 +56,20 @@
             			</div>
             			<p>Escolha uma disciplina ou tema ao lado para acessar os leites.</p>
             		</div>
+            		<ul class="uk-nav uk-nav-side">
+							<li class="uk-divider"></li>
+							@for(dica <- dicas){
+							<!-- CRIAR UMA ROTA PARA REDIRECIONAR O LINK -->
+							<p>Dica:</p>
+           						<li class="uk-nav-header"><a href="/dica/@dica.getId()">@dica.getTexto()</a></li>
+           						<p>Tema:</p>
+           						<li class="uk-nav-header">@dica.getTema().getName()</li>
+            					<p>Disciplina:</p>
+            					<li class="uk-nav-header">@dica.getTema().getDisciplina()</li>
+            				
+								<li class="uk-divider"></li>
+							}
+            			</ul>
             	</div>
             </div>
         </div>
