@@ -31,28 +31,34 @@ public class Application extends Controller {
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		List<Dica> ultimasDicas = dao.findAllByClassName(Dica.class.getName());
-		DicaSort(ultimasDicas);
-		return ok(views.html.index.render(disciplinas, RetornaDezUltimas(ultimasdicas)));
+		return ok(views.html.index.render(disciplinas, RetornaDezUltimas(ultimasDicas)));
     }
 	private static List<Dica> RetornaDezUltimas(List<Dica> ultimasDicas){
 		List<Dica> dezultimasDicas = new ArrayList();
-		for(int i=0; 1 < 10; i++){
-			dezultimasDicas.add(ultimasdicas.get(i))
+		try{
+			for(int i=0; 1 < 10; i++){
+				dezultimasDicas.add(ultimasDicas.get(i));
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return dezultimasDicas;
 	}
-	private static void DicaSort(List<Dica> ultimasDicas){
-		
-		for(int i = 0; i< ultimasDicas.size(); i++){ 
-			for(int j = 0; j< ultimasDicas.size() -1; j++){ 
-				if(ultimasDicas.get(j).getData().compareTo(ultimasDicas.get(j+1).getData()) > 0){ 
-					Dica aux = ultimasDicas.get(j);
-					ultimasDicas.set(j, ultimasDicas.get(j+1));
-				    ultimasDicas.set(i+1, aux);
-					} 
-				} 
+	private static void DicaSort(List<Dica> ultimasDicas){	
+		boolean houveTroca = true;
+		Dica temp;
+		while(houveTroca){
+			houveTroca = false;
+			for(int i = 0; i < ultimasDicas.size() -1; i++){
+				if(ultimasDicas.get(i).getData().after(ultimasDicas.get(i+1).getData())){
+					temp = ultimasDicas.get(i);
+					ultimasDicas.set(i,ultimasDicas.get(i+1) );
+					ultimasDicas.set(i+1, temp);
+					houveTroca = true;
+				}
 			}
-
+		}
 		
 	}
 	@Transactional
