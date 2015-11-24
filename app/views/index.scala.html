@@ -65,7 +65,14 @@
            						<p>Tema:</p>
            						<li class="uk-nav-header">@dica.getTema().getName()</li>
             					<p>Disciplina:</p>
-            					<li class="uk-nav-header">@dica.getTema().getDisciplina()</li>
+            					
+            					@for(disciplina <- disciplinas){
+            					@if(dica.getTema() == disciplina.getTemaByNome(dica.getTema().getName())){
+            						<li class="uk-nav-header">@disciplina.getNome()</li>
+            					}
+            					
+            					}
+            					
             				
 								<li class="uk-divider"></li>
 							}
