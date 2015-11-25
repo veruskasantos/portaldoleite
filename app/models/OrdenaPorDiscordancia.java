@@ -12,7 +12,7 @@ public class OrdenaPorDiscordancia implements Ordenavel{
 		while(houveTroca){
 			houveTroca = false;
 			for(int i = 0; i < dicasOrdenada.size() -1; i++){
-				if(dicasOrdenada.get(i).getDiscordancias() > (dicasOrdenada.get(i+1).getDiscordancias())){
+				if(dicasOrdenada.get(i).getDiscordancias() < (dicasOrdenada.get(i+1).getDiscordancias())){
 					temp = dicasOrdenada.get(i);
 					dicasOrdenada.set(i,dicasOrdenada.get(i+1) );
 					dicasOrdenada.set(i+1, temp);
