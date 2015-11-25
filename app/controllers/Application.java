@@ -12,6 +12,10 @@ import models.DicaDisciplina;
 import models.DicaMaterial;
 import models.Disciplina;
 import models.MetaDica;
+import models.OrdenaPorData;
+import models.OrdenaPorDiscordancia;
+import models.OrdenaPorVoto;
+import models.Ordenavel;
 import models.Tema;
 import models.dao.GenericDAOImpl;
 import play.Logger;
@@ -25,73 +29,47 @@ import play.mvc.Security;
 public class Application extends Controller {
 	private static final int MAX_DENUNCIAS = 3;
 	private static GenericDAOImpl dao = new GenericDAOImpl();
+	private static Ordenavel ordena;
 	
 	@Transactional
 	@Security.Authenticated(Secured.class)
     public static Result index() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
-		List<Dica> ultimasDicas = dao.findAllByClassName(Dica.class.getName());
-		DicaSortData(ultimasDicas);
-		return ok(views.html.index.render(disciplinas, RetornaDezUltimas(ultimasDicas)));
+		
+		return ok(views.html.index.render(disciplinas));
     }
+	
+	@Transactional
+	public static Result ordenaDicas(){
+		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
+		List<Dica> dicas = dao.findAllByClassName(Dica.class.getName());
+		DynamicForm requestFiltro = Form.form().bindFromRequest();
+		if (requestFiltro.get("filtro") == null || requestFiltro.get("filtro").equals("maisRecentes")) {
+			ordena = new OrdenaPorData();
+		}else if (requestFiltro.get("filtro").equals("maisDiscordancias")) {
+			ordena = new OrdenaPorDiscordancia();
+		}else{
+			ordena = new OrdenaPorVoto();
+		}
+		ordena.ordenaDicas(dicas);
+		
+		return ok(views.html.dicasOrdenadas.render(disciplinas, RetornaDezUltimas(dicas)));
+	}
+	
 	private static List<Dica> RetornaDezUltimas(List<Dica> ultimasDicas){
-		List<Dica> dezultimasDicas = new ArrayList();
+		List<Dica> dezUltimasDicas = new ArrayList();
+		
 		try{
 			for(int i=0; 1 < 10; i++){
-				dezultimasDicas.add(ultimasDicas.get(i));
+				dezUltimasDicas.add(ultimasDicas.get(i));
 			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return dezultimasDicas;
+		return dezUltimasDicas;
 	}
-	private static void DicaSortDiscordancia(List<Dica> ultimasDicas){
-		boolean houveTroca = true;
-		Dica temp;
-		while(houveTroca){
-			houveTroca = false;
-			for(int i = 0; i < ultimasDicas.size() -1; i++){
-				if(ultimasDicas.get(i).getDiscordancias() > (ultimasDicas.get(i+1).getDiscordancias())){
-					temp = ultimasDicas.get(i);
-					ultimasDicas.set(i,ultimasDicas.get(i+1) );
-					ultimasDicas.set(i+1, temp);
-					houveTroca = true;
-				}
-			}
-		}
-	}
-	private static void DicaSortConcordancia(List<Dica> ultimasDicas){
-		boolean houveTroca = true;
-		Dica temp;
-		while(houveTroca){
-			houveTroca = false;
-			for(int i = 0; i < ultimasDicas.size() -1; i++){
-				if(ultimasDicas.get(i).getConcordancias() > (ultimasDicas.get(i+1).getConcordancias())){
-					temp = ultimasDicas.get(i);
-					ultimasDicas.set(i,ultimasDicas.get(i+1) );
-					ultimasDicas.set(i+1, temp);
-					houveTroca = true;
-				}
-			}
-		}
-	}
-	private static void DicaSortData(List<Dica> ultimasDicas){	
-		boolean houveTroca = true;
-		Dica temp;
-		while(houveTroca){
-			houveTroca = false;
-			for(int i = 0; i < ultimasDicas.size() -1; i++){
-				if(ultimasDicas.get(i).getData().after(ultimasDicas.get(i+1).getData())){
-					temp = ultimasDicas.get(i);
-					ultimasDicas.set(i,ultimasDicas.get(i+1) );
-					ultimasDicas.set(i+1, temp);
-					houveTroca = true;
-				}
-			}
-		}
-		
-	}
+	
 	@Transactional
 	@Security.Authenticated(Secured.class)
 	public static Result tema(long id) {
