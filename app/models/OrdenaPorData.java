@@ -12,7 +12,7 @@ public class OrdenaPorData implements Ordenavel{
 		while(houveTroca){
 			houveTroca = false;
 			for(int i = 0; i < dicasOrdenada.size() -1; i++){
-				if(dicasOrdenada.get(i).getData().after(dicasOrdenada.get(i+1).getData())){
+				if(dicasOrdenada.get(i).getData().before(dicasOrdenada.get(i+1).getData())){
 					temp = dicasOrdenada.get(i);
 					dicasOrdenada.set(i,dicasOrdenada.get(i+1) );
 					dicasOrdenada.set(i+1, temp);
