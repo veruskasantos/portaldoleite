@@ -30,6 +30,6 @@ public class DicaConselho extends Dica{
 	
 	@Override
 	public String getTipo() {
-		return "DicaConselho";
+		return "Conselho";
 	}
 }
