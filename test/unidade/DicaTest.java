@@ -85,12 +85,12 @@ public class DicaTest {
 	 * Testa se a flag de denúncia é incrementada corretamente numa dica.
 	 */
 	@Test
-	public void devePoderReceberFlags() {
-		assertThat(dica2.getFlag()).isEqualTo(0);
-		dica2.incrementaFlag();
-		assertThat(dica2.getFlag()).isEqualTo(1);
-		dica2.incrementaFlag();
-		assertThat(dica2.getFlag()).isEqualTo(2);
+	public void devePoderReceberDenuncias() {
+		assertThat(dica2.getNumDenuncias()).isEqualTo(0);
+		dica2.incrementaNumDenuncias();
+		assertThat(dica2.getNumDenuncias()).isEqualTo(1);
+		dica2.incrementaNumDenuncias();
+		assertThat(dica2.getNumDenuncias()).isEqualTo(2);
 	}
 	
 	/**
