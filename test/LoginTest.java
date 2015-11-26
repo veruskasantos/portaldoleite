@@ -44,7 +44,7 @@ public class LoginTest extends AbstractTest{
 	@Test
 	public void deveFalharParaUsuarioInvalido() {
 		List<User> users = dao.findAllByClassName("User");
-		assertThat(users.size()).isEqualTo(0);
+		assertThat(users.size()).isEqualTo(10);
 		
 		FakeRequest fakeRequest1 = new FakeRequest();
 		Map<String, String> form1 = new HashMap<String, String>();
@@ -80,7 +80,7 @@ public class LoginTest extends AbstractTest{
 		
 		List<User> users = dao.findAllByClassName("User");
 		
-		assertThat(users.size()).isEqualTo(1);
+		assertThat(users.size()).isEqualTo(11);
 		
 		FakeRequest fakeRequest2 = new FakeRequest();
 		Map<String, String> form2 = new HashMap<String, String>();
