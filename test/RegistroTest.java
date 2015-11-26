@@ -43,17 +43,10 @@ public class RegistroTest extends AbstractTest{
 	public void deveRegistrarUser() {
 		List<User> users = dao.findAllByClassName("User");
 		
-		assertThat(users).isEmpty();
+		assertThat(users.size()).isEqualTo(10);
 		
-		FakeRequest fakeRequest = new FakeRequest();
 		Map<String, String> form = new HashMap<String, String>();
-		form.put("nome", "joao");
-		form.put("email", "a@b.c");
-		form.put("login", "joooao");
-		form.put("pass", "tchutchu");
-		fakeRequest.withFormUrlEncodedBody(form);
-		
-		result = callAction(controllers.routes.ref.Register.register(), fakeRequest);
+		cadastraUsuario(form);
 		
 		assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
 		
@@ -62,42 +55,52 @@ public class RegistroTest extends AbstractTest{
 		assertThat(users).isNotEmpty();
 	}
 	
+	public void cadastraUsuario(Map<String, String> form){
+		FakeRequest fakeRequest = new FakeRequest();
+		form.put("nome", "joao");
+		form.put("email", "a@b.c");
+		form.put("login", "joooao");
+		form.put("pass", "tchutchu");
+		fakeRequest.withFormUrlEncodedBody(form);
+		
+		result = callAction(controllers.routes.ref.Register.register(), fakeRequest);
+		
+	}
+
+         public void cadastraUsuariologin(Map<String, String> form){
+		FakeRequest fakeRequest = new FakeRequest();
+		form.put("nome", "joao");
+		form.put("email", "ab@c.d");
+		form.put("login", "joooao");
+		form.put("pass", "tchutchu");
+		fakeRequest.withFormUrlEncodedBody(form);
+		
+		result = callAction(controllers.routes.ref.Register.register(), fakeRequest);
+		
+	}
+	
 	/**
 	 * Testa se realmente não se pode registrar um usuário com login já usado.
 	 */
 	@Test
 	public void deveNaoPermitirCadastroDeUsuariosComMesmoLogin() {
-		FakeRequest fakeRequest1 = new FakeRequest();
 		Map<String, String> form1 = new HashMap<String, String>();
-		form1.put("nome", "joao");
-		form1.put("email", "abc@bbc.com");
-		form1.put("login", "mimimimi");
-		form1.put("pass", "tchutchu");
-		fakeRequest1.withFormUrlEncodedBody(form1);
-		
-		result = callAction(controllers.routes.ref.Register.register(), fakeRequest1);
+		cadastraUsuario(form1);
 		
 		assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
 		
 		List<User> users = dao.findAllByClassName("User");
 		
-		assertThat(users.size()).isEqualTo(1);
+		assertThat(users.size()).isEqualTo(11);
 		
-		FakeRequest fakeRequest2 = new FakeRequest();
 		Map<String, String> form2 = new HashMap<String, String>();
-		form2.put("nome", "joao");
-		form2.put("email", "a@b.com");
-		form2.put("login", "mimimimi");
-		form2.put("pass", "tchutchu");
-		fakeRequest2.withFormUrlEncodedBody(form2);
-		
-		result = callAction(controllers.routes.ref.Register.register(), fakeRequest2);
+		cadastraUsuariologin(form2);
 		
 		assertThat(status(result)).isEqualTo(Http.Status.BAD_REQUEST);
 		
 		users = dao.findAllByClassName("User");
 		
-		assertThat(users.size()).isEqualTo(1);
+		assertThat(users.size()).isEqualTo(11);
 		Map<String, String> flash = new HashMap<String, String>();
 		flash.put("fail", "Login em uso");
 		assertThat(flash(result)).isEqualTo(flash);
@@ -122,7 +125,7 @@ public class RegistroTest extends AbstractTest{
 		
 		List<User> users = dao.findAllByClassName("User");
 		
-		assertThat(users.size()).isEqualTo(1);
+		assertThat(users.size()).isEqualTo(11);
 		
 		FakeRequest fakeRequest2 = new FakeRequest();
 		Map<String, String> form2 = new HashMap<String, String>();
@@ -138,7 +141,7 @@ public class RegistroTest extends AbstractTest{
 		
 		users = dao.findAllByClassName("User");
 		
-		assertThat(users.size()).isEqualTo(1);
+		assertThat(users.size()).isEqualTo(11);
 		Map<String, String> flash = new HashMap<String, String>();
 		flash.put("fail", "E-mail em uso");
 		assertThat(flash(result)).isEqualTo(flash);
