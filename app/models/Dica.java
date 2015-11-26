@@ -202,5 +202,5 @@ public abstract class Dica implements Comparable<Dica>{
 
 	public abstract String getTipo();
 	
-	public abastract String GetTipoDica();
+	public abstract String GetTipoDica();
 }
