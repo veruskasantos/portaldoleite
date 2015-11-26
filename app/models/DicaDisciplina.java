@@ -42,6 +42,10 @@ public class DicaDisciplina extends Dica{
 	
 	@Override
 	public String getTipo() {
-		return "Disciplina";
+		return "DicaDisciplina";
+	}
+	@Override
+	public String GetTipoDica(){
+		return "Disciplina"
 	}
 }
