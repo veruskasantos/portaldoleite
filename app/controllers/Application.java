@@ -378,9 +378,9 @@ public class Application extends Controller {
 		String login = session("login");
 		if (!dica.wasFlaggedByUser(login)) {
 			dica.addUsuarioFlag(login);
-			dica.incrementaFlag();
+			dica.incrementaNumDenuncias();
 			
-			if (dica.getFlag() == MAX_DENUNCIAS) {
+			if (dica.getNumDenuncias() == MAX_DENUNCIAS) {
 				dao.removeById(Dica.class, idDica);
 				
 				for (MetaDica metadica : dica.getMetaDicas()) {
