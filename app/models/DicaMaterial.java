@@ -30,6 +30,6 @@ public class DicaMaterial extends Dica{
 	
 	@Override
 	public String getTipo() {
-		return "DicaMaterial";
+		return "Material";
 	}
 }
