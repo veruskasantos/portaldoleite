@@ -107,7 +107,7 @@ public class Global extends GlobalSettings {
 		programacao2.addTema(new Tema("Teste de unidade"));
 		programacao2.addTema(new Tema("Criação de classes e objetos"));
 		programacao2.addTema(new Tema("INtrodução a java"));
-		lab = new Tema("Labroratórios");
+		lab = new Tema("Laboratórios");
 		programacao2.addTema(lab);
 		programacao2.addTema(new Tema("Projeto"));
 		dao.persist(programacao2);
@@ -230,11 +230,7 @@ public class Global extends GlobalSettings {
 		dao.persist(dicaAssunto);
 		dao.persist(javaScript);
 		
-		dicaMaterial = new DicaMaterial("https://www.google.com.br/"
-				+ "url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved="
-				+ "0ahUKEwjMxceHzaLJAhXMmpAKHaCKB_gQFggkMAI&url=https%3A%2F%2Fpt."
-				+ "wikipedia.org%2Fwiki%2FL%25C3%25B3gica_matem%25C3%25A1tica&usg="
-				+ "AFQjCNHZFO7AY7tcmwdt6HsePdjUKHbmFw");
+		dicaMaterial = new DicaMaterial("https://pt.wikipedia.org/wiki/Lógica_matemática");
 		dicaMaterial.setUser(user1.getNome());
 		dicaMaterial.setTema(logicaProposicional);
 		dicaMaterial.setData(2015,6, 10, 20, 30);
