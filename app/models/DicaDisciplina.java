@@ -46,6 +46,6 @@ public class DicaDisciplina extends Dica{
 	}
 	@Override
 	public String GetTipoDica(){
-		return "Disciplina"
+		return "Disciplina";
 	}
 }
