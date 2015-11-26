@@ -201,6 +201,6 @@ public abstract class Dica implements Comparable<Dica>{
 	}
 
 	public abstract String getTipo();
-	
+	//Nome do tipo da dica para melhor visualizacao no HTML
 	public abstract String GetTipoDica();
 }
