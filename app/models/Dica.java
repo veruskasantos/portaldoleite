@@ -53,7 +53,7 @@ public abstract class Dica implements Comparable<Dica>{
 	private int discordancias;
 	
 	@Column
-	private int flag;
+	private int numDenuncias;
 	
 	@ElementCollection
 	private List<String> usuarioqueQueJaDenunciaram;
@@ -85,7 +85,7 @@ public abstract class Dica implements Comparable<Dica>{
 		this.usersCommentaries = new HashMap<String,String>();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -131,12 +131,12 @@ public abstract class Dica implements Comparable<Dica>{
 		return String.format("%.2f", this.getConcordancias()/((float) soma));
 	}
 	
-	public int getFlag() {
-		return flag;
+	public int getNumDenuncias() {
+		return numDenuncias;
 	}
 
-	public void incrementaFlag() {
-		this.flag = flag + 1;
+	public void incrementaNumDenuncias() {
+		this.numDenuncias = numDenuncias + 1;
 	}
 
 	public String getUser() {
