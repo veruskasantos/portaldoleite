@@ -17,7 +17,7 @@ public class UsuarioTest extends AbstractTest{
 		User u = new User("admin@gmail.com","1234","Admin");
 		dao.persist(u);
 		
-		assertThat(dao.findAllByClassName("User").size()).isEqualTo(1);
+		assertThat(dao.findAllByClassName("User").size()).isEqualTo(11);
 		
 		User usuarioNoBD = dao.findByEntityId(User.class, u.getId());
 		
@@ -26,7 +26,7 @@ public class UsuarioTest extends AbstractTest{
 		User u2 = new User("abc@gmail.com", "123", "Leo");
 		dao.persist(u2);
 		
-		assertThat(dao.findAllByClassName("User").size()).isEqualTo(2);
+		assertThat(dao.findAllByClassName("User").size()).isEqualTo(12);
 		
 		User usuario2NoBD = dao.findByEntityId(User.class, u2.getId());
 		
