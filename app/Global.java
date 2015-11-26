@@ -106,7 +106,7 @@ public class Global extends GlobalSettings {
                 programacao2.addTema(new Tema("Reuso, Composição e herança"));
 		programacao2.addTema(new Tema("Teste de unidade"));
 		programacao2.addTema(new Tema("Criação de classes e objetos"));
-		programacao2.addTema(new Tema("INtrodução a java"));
+		programacao2.addTema(new Tema("Introdução a java"));
 		lab = new Tema("Laboratórios");
 		programacao2.addTema(lab);
 		programacao2.addTema(new Tema("Projeto"));
