@@ -3,45 +3,33 @@ package models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity(name="DicaDisciplina")
-public class DicaDisciplina extends Dica{
+@Entity(name="DicaConselho")
+public class DicaConselho extends Dica{
 	@Column
-	private String nomeDisciplina;
+	private String conselho;
 	
-	@Column
-	private String razao;
-	
-	public DicaDisciplina() {
+	public DicaConselho() {
 	}
 	
-	public DicaDisciplina(String nomeDisciplina, String razao) {
-		this.nomeDisciplina = nomeDisciplina;
-		this.razao = razao;
+	public DicaConselho(String conselho) {
+		this.conselho = conselho;
 	}
 
-	public String getNomeDisciplina() {
-		return nomeDisciplina;
+	public String getConselho() {
+		return conselho;
 	}
 
-	public void setNomeDisciplina(String nomeDisciplina) {
-		this.nomeDisciplina = nomeDisciplina;
-	}
-
-	public String getRazao() {
-		return razao;
-	}
-
-	public void setRazao(String razao) {
-		this.razao = razao;
+	public void setConselho(String conselho) {
+		this.conselho = conselho;
 	}
 
 	@Override
 	public String getTexto() {
-		return this.nomeDisciplina;
+		return getConselho();
 	}
 	
 	@Override
 	public String getTipo() {
-		return "DicaDisciplina";
+		return "Conselho";
 	}
 }
